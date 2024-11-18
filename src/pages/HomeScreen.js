@@ -1,11 +1,11 @@
-// 홈 탭 화면
-// src/pages/HomeScreen.js
-// src/pages/HomeScreen.js
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native';
+import PagerView from 'react-native-pager-view';
 import CustomHeader from '../components/CustomHeader';
 import GoalCard from '../components/Home/GoalCard';
 import SubscriptionCard from '../components/Home/SubscriptionCard';
+
+const { width: screenWidth } = Dimensions.get('window');
 
 const HomeScreen = () => {
   // 목표 데이터
@@ -36,27 +36,26 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Custom Header */}
+      {/* 상단 커스텀 헤더 */}
       <CustomHeader title="Home" />
 
-      {/* 목표 목록 섹션 */}
+      {/* 목표 목록 (뷰페이저) */}
       <Text style={styles.sectionTitle}>목표 목록</Text>
-      <FlatList
-        data={goals}
-        renderItem={({ item }) => (
-          <GoalCard
-            title={item.title}
-            level={item.level}
-            progress={item.progress}
-            status={item.status}
-            image={item.image}
-          />
-        )}
-        keyExtractor={(item) => item.id}
-        style={styles.list}
-      />
+      <PagerView style={styles.pagerView} initialPage={0}>
+        {goals.map((goal, index) => (
+          <View key={index} style={styles.page}>
+            <GoalCard
+              title={goal.title}
+              level={goal.level}
+              progress={goal.progress}
+              status={goal.status}
+              image={goal.image}
+            />
+          </View>
+        ))}
+      </PagerView>
 
-      {/* 구독 목록 섹션 */}
+      {/* 구독 목록 */}
       <Text style={styles.sectionTitle}>구독 목록</Text>
       <FlatList
         data={subscriptions}
@@ -82,6 +81,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 8,
     color: '#222',
+  },
+  pagerView: {
+    height: 250,
+    marginBottom: 16,
+  },
+  page: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: screenWidth,
   },
   list: {
     marginBottom: 16,
