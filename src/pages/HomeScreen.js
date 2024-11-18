@@ -5,10 +5,10 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import PagerView from 'react-native-pager-view';
-import { useNavigation } from '@react-navigation/native'; // React Navigation 사용
+import { useNavigation } from '@react-navigation/native';
 import CustomHeader from '../components/CustomHeader';
 import GoalCard from '../components/Home/GoalCard';
 import SubscriptionCard from '../components/Home/SubscriptionCard';
@@ -17,7 +17,7 @@ const { width: screenWidth } = Dimensions.get('window');
 
 const HomeScreen = () => {
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 상태
-  const navigation = useNavigation(); // Navigation 객체
+  const navigation = useNavigation(); // 네비게이션 객체
 
   // 목표 데이터
   const goals = [
@@ -66,21 +66,24 @@ const HomeScreen = () => {
         onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} // 페이지 변경 시 업데이트
       >
         {goals.map((goal, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.page}
-            onPress={() =>
-              navigation.navigate('GoalScreen', { goal }) // GoalScreen으로 전환
-            }
-          >
-            <GoalCard
-              title={goal.title}
-              level={goal.level}
-              progress={goal.progress}
-              status={goal.status}
-              image={goal.image}
-            />
-          </TouchableOpacity>
+          <View key={index} style={styles.page}>
+            {/* 클릭 이벤트 추가 */}
+            <TouchableWithoutFeedback
+              onPress={() =>
+                navigation.navigate('GoalScreen', { goal }) // GoalScreen으로 전환
+              }
+            >
+              <View>
+                <GoalCard
+                  title={goal.title}
+                  level={goal.level}
+                  progress={goal.progress}
+                  status={goal.status}
+                  image={goal.image}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
         ))}
       </PagerView>
 
