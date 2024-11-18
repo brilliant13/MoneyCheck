@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import CustomHeader from '../components/CustomHeader';
@@ -8,6 +8,8 @@ import SubscriptionCard from '../components/Home/SubscriptionCard';
 const { width: screenWidth } = Dimensions.get('window');
 
 const HomeScreen = () => {
+  const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 상태
+
   // 목표 데이터
   const goals = [
     {
@@ -26,6 +28,14 @@ const HomeScreen = () => {
       status: '목표를 위해 가는 중',
       image: require('../assets/applewatch.png'),
     },
+    {
+      id: '3',
+      title: '아이패드',
+      level: 4,
+      progress: 87,
+      status: '목표를 위해 가는 중',
+      image: require('../assets/ipad.png'),
+    },
   ];
 
   // 구독 데이터
@@ -41,7 +51,11 @@ const HomeScreen = () => {
 
       {/* 목표 목록 (뷰페이저) */}
       <Text style={styles.sectionTitle}>목표 목록</Text>
-      <PagerView style={styles.pagerView} initialPage={0}>
+      <PagerView
+        style={styles.pagerView}
+        initialPage={0}
+        onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} // 페이지 변경 시 업데이트
+      >
         {goals.map((goal, index) => (
           <View key={index} style={styles.page}>
             <GoalCard
@@ -54,6 +68,19 @@ const HomeScreen = () => {
           </View>
         ))}
       </PagerView>
+
+      {/* 인디케이터 */}
+      <View style={styles.indicatorContainer}>
+        {goals.map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.indicator,
+              currentPage === index && styles.activeIndicator,
+            ]}
+          />
+        ))}
+      </View>
 
       {/* 구독 목록 */}
       <Text style={styles.sectionTitle}>구독 목록</Text>
@@ -74,7 +101,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f9f9f9',
     paddingTop: 16,
-    // alignItems: 'center', // 컨테이너를 중앙으로 정렬
   },
   sectionTitle: {
     fontSize: 20,
@@ -83,8 +109,8 @@ const styles = StyleSheet.create({
     color: '#222',
   },
   pagerView: {
-    height: 280, // 높이 조정
-    marginBottom: 16,
+    height: 210, // 높이 조정
+    marginBottom: 5,
     width: screenWidth * 0.9, // 너비를 화면 너비의 90%로 조정
     alignSelf: 'center', // 뷰페이저 중앙 정렬
   },
@@ -96,7 +122,22 @@ const styles = StyleSheet.create({
   },
   list: {
     marginBottom: 16,
-    width: screenWidth * 0.9, // 구독 목록도 화면 너비에 맞춤
+    width: screenWidth * 0.9,
+  },
+  indicatorContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  indicator: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#ccc',
+    marginHorizontal: 4,
+  },
+  activeIndicator: {
+    backgroundColor: '#32CD32',
   },
 });
 
