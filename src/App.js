@@ -3,7 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigator from './navigation/TabNavigator';
-import GoalScreen from './pages/GoalScreen'; // GoalScreen 추가
+import GoalScreen from './pages/Home/GoalScreen'; // GoalScreen 추가
 
 const Stack = createStackNavigator();
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, StyleSheet } from 'react-native';
-import HomeScreen from '../pages/HomeScreen';
+import HomeScreen from '../pages/Home/HomeScreen';
 import AccountBookScreen from '../pages/AccountBook';
 import GroupManagement from '../pages/GroupManagement';
 import Statistics from '../pages/Stats';

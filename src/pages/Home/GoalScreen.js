@@ -11,7 +11,7 @@ import {
   StatusBar,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import GoalCard from '../components/Home/GoalCard';
+import GoalCard from '../../components/Home/GoalCard';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -23,7 +23,7 @@ const GoalScreen = ({ navigation }) => {
       level: 1,
       progress: 50,
       status: '목표를 위해 가는 중',
-      image: require('../assets/macbook.png'),
+      image: require('../../assets/macbook.png'),
     },
     {
       id: '2',
@@ -31,7 +31,7 @@ const GoalScreen = ({ navigation }) => {
       level: 1,
       progress: 30,
       status: '목표를 위해 가는 중',
-      image: require('../assets/applewatch.png'),
+      image: require('../../assets/applewatch.png'),
     },
     {
       id: '3',
@@ -39,8 +39,16 @@ const GoalScreen = ({ navigation }) => {
       level: 1,
       progress: 87,
       status: '목표를 위해 가는 중',
-      image: require('../assets/ipad.png'),
+      image: require('../../assets/ipad.png'),
     },
+    {
+        id: '4',
+        title: '아이패드 미니',
+        level: 4,
+        progress: 34,
+        status: '목표를 위해 가는 중',
+        image: require('../../assets/ipad.png'),
+      },
   ];
 
   return (
