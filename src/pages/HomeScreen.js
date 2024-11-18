@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f9f9f9',
-    paddingHorizontal: 16,
     paddingTop: 16,
+    // alignItems: 'center', // 컨테이너를 중앙으로 정렬
   },
   sectionTitle: {
     fontSize: 20,
@@ -83,16 +83,20 @@ const styles = StyleSheet.create({
     color: '#222',
   },
   pagerView: {
-    height: 250,
+    height: 280, // 높이 조정
     marginBottom: 16,
+    width: screenWidth * 0.9, // 너비를 화면 너비의 90%로 조정
+    alignSelf: 'center', // 뷰페이저 중앙 정렬
   },
   page: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: screenWidth,
+    width: screenWidth * 0.9,
+    alignSelf: 'center',
   },
   list: {
     marginBottom: 16,
+    width: screenWidth * 0.9, // 구독 목록도 화면 너비에 맞춤
   },
 });
 
