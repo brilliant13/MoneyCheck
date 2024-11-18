@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import PagerView from 'react-native-pager-view';
+import { useNavigation } from '@react-navigation/native'; // React Navigation 사용
 import CustomHeader from '../components/CustomHeader';
 import GoalCard from '../components/Home/GoalCard';
 import SubscriptionCard from '../components/Home/SubscriptionCard';
@@ -9,6 +17,7 @@ const { width: screenWidth } = Dimensions.get('window');
 
 const HomeScreen = () => {
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 상태
+  const navigation = useNavigation(); // Navigation 객체
 
   // 목표 데이터
   const goals = [
@@ -46,8 +55,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* 상단 커스텀 헤더
-      <CustomHeader title="Home" /> */}
+      {/* 상단 커스텀 헤더 */}
+      <CustomHeader title="Home" />
 
       {/* 목표 목록 (뷰페이저) */}
       <Text style={styles.sectionTitle}>목표 목록</Text>
@@ -57,7 +66,13 @@ const HomeScreen = () => {
         onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} // 페이지 변경 시 업데이트
       >
         {goals.map((goal, index) => (
-          <View key={index} style={styles.page}>
+          <TouchableOpacity
+            key={index}
+            style={styles.page}
+            onPress={() =>
+              navigation.navigate('GoalScreen', { goal }) // GoalScreen으로 전환
+            }
+          >
             <GoalCard
               title={goal.title}
               level={goal.level}
@@ -65,7 +80,7 @@ const HomeScreen = () => {
               status={goal.status}
               image={goal.image}
             />
-          </View>
+          </TouchableOpacity>
         ))}
       </PagerView>
 
