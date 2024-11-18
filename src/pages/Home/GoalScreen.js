@@ -1,4 +1,3 @@
-// src/pages/GoalScreen.js
 import React from 'react';
 import {
   View,
@@ -42,13 +41,13 @@ const GoalScreen = ({ navigation }) => {
       image: require('../../assets/ipad.png'),
     },
     {
-        id: '4',
-        title: '아이패드 미니',
-        level: 4,
-        progress: 34,
-        status: '목표를 위해 가는 중',
-        image: require('../../assets/ipad.png'),
-      },
+      id: '4',
+      title: '아이패드 미니',
+      level: 4,
+      progress: 34,
+      status: '목표를 위해 가는 중',
+      image: require('../../assets/ipad.png'),
+    },
   ];
 
   return (
@@ -78,7 +77,12 @@ const GoalScreen = ({ navigation }) => {
       <FlatList
         data={goals}
         renderItem={({ item }) => (
-          <View style={styles.cardWrapper}>
+          <TouchableOpacity
+            style={styles.cardWrapper}
+            onPress={() =>
+              navigation.navigate('GoalDetail', { goal: item }) // 'GoalDetail'로 전환하며 클릭한 목표 데이터 전달
+            }
+          >
             <GoalCard
               title={item.title}
               level={item.level}
@@ -86,7 +90,7 @@ const GoalScreen = ({ navigation }) => {
               status={item.status}
               image={item.image}
             />
-          </View>
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
