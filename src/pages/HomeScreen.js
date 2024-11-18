@@ -36,8 +36,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* 상단 커스텀 헤더 */}
-      <CustomHeader title="Home" />
+      {/* 상단 커스텀 헤더
+      <CustomHeader title="Home" /> */}
 
       {/* 목표 목록 (뷰페이저) */}
       <Text style={styles.sectionTitle}>목표 목록</Text>
