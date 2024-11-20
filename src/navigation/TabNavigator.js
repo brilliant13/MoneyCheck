@@ -20,7 +20,7 @@ const TabNavigator = () => {
         screenOptions={({ route }) => ({
           header: () => {
             if (route.name === 'Home') {
-              return <CustomHeader title="Home" showProfile={true} />;
+              return <CustomHeader title="Home" showProfile={true} />;  
             } else if (route.name === 'Account Book') {
               return <CustomHeader title="가계부" />;
             } else if (route.name === 'Group Management') {
