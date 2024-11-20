@@ -6,6 +6,8 @@ import TabNavigator from './navigation/TabNavigator';
 import GoalScreen from './pages/Home/GoalScreen'; // GoalScreen 추가
 import GoalDetailScreen from './pages/Home/GoalDetailScreen'; // GoalScreen 추가
 import SubscriptionScreen from './pages/Home/SubscriptionScreen'; // SubscriptionScreen 추가
+import SubscriptionListScreen from './pages/Home/SubscriptionListScreen'; // SubscriptionListScreen 추가
+import SubscriptionAddScreen from './pages/Home/SubscriptionAddScreen'; // SubscriptionAddScreen 추가
 
 
 const Stack = createStackNavigator();
@@ -20,6 +22,10 @@ export default function App() {
         <Stack.Screen name="GoalScreen" component={GoalScreen} />
         <Stack.Screen name="GoalDetail" component={GoalDetailScreen} />
         <Stack.Screen name="SubscriptionScreen" component={SubscriptionScreen} />
+        <Stack.Screen name="SubscriptionListScreen" component={SubscriptionListScreen} />
+        <Stack.Screen name="SubscriptionAddScreen" component={SubscriptionAddScreen} />
+
+
       </Stack.Navigator>
     </NavigationContainer>
   );
