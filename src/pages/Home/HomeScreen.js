@@ -94,8 +94,8 @@ const HomeScreen = () => {
       <View style={styles.subscriptionContainer}>
         <View style={styles.subscriptionHeader}>
           <Text style={styles.subscriptionTitle}>구독 관리</Text>
-          <TouchableWithoutFeedback onPress={() => alert('더보기')}>
-            <Text style={styles.moreText}>더보기> </Text>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('SubscriptionScreen')}>
+            <Text style={styles.moreText}>더보기{`>`} </Text>
           </TouchableWithoutFeedback>
         </View>
         <Text style={styles.subscriptionSubtitle}>5개 구독 중</Text>
@@ -184,8 +184,8 @@ const styles = StyleSheet.create({
 
   },
   moreText: {
-    fontSize: 14,
-    color: '#007aff',
+    fontSize: 12,
+    color: '#B4B4B4',
     textAlign: 'right',
   },
   subscriptionList: {
