@@ -67,7 +67,7 @@ const GoalScreen = ({ navigation }) => {
         <Text style={styles.description}>현재 {goals.length}개의 목표를 설정했어요</Text>
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() => alert('목표 추가하기')}
+          onPress={() =>  navigation.navigate('GoalAddScreen')} //화면 전환
         >
           <Text style={styles.addButtonText}>+ 목표 추가</Text>
         </TouchableOpacity>
