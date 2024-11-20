@@ -1,10 +1,12 @@
 //공동 관리 탭 화면
-// src/pages/GroupManagement.js
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const GroupManagement = () => {
+  const navigation = useNavigation();
+  
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -12,19 +14,19 @@ const GroupManagement = () => {
         <Text style={styles.title}>지금 바로 공동관리를 시작해 보세요!</Text>
         
         <Image 
-          source={require('../../assets/Jiyoon/Group_Coin.png')} 
+          source={require('../../../assets/Jiyoon/Group/coin.png')} 
           style={styles.image}
         />
 
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity 
+          style={styles.button} 
+          onPress={() => navigation.navigate('GroupDetail')}
+        >
           <View style={styles.buttonContent}>
             <Image 
-              source={require('../../assets/Jiyoon/Group_start.png')} 
+              source={require('../../../assets/Jiyoon/Group/start.png')} 
               style={styles.buttonIcon} 
             />
-            {/* <Ionicons name="people" size={24} color="white" style={styles.buttonIcon} />
-          <Text style={styles.buttonText}>공동관리 시작하기</Text>
-          <Ionicons name="chevron-forward" size={24} color="white" /> */}
             <Text style={styles.buttonText}>공동관리 시작하기</Text>
             <Ionicons name="chevron-forward" size={24} color="white" />
           </View>
