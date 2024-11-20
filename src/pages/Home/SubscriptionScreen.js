@@ -33,9 +33,19 @@ const SubscriptionScreen = ({ navigation }) => {
 
       {/* 제목 및 설명 */}
       <View style={styles.titleContainer}>
-        <Text style={styles.subTitle}>구독 관리</Text>
+        <View style={styles.titleRow}>
+          <Text style={styles.subTitle}>구독 관리</Text>
+          {/* 구독 추가 버튼 */}
+          <TouchableOpacity 
+            style={styles.addButton} 
+            onPress={() => navigation.navigate('SubscriptionListScreen')} // 화면 전환
+          >
+            <Text style={styles.addButtonText}>구독 추가</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.description}>현재 {subscriptions.length}개를 구독하고 있어요</Text>
       </View>
+
 
       {/* 구독 리스트 */}
       <FlatList
@@ -88,13 +98,34 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
   },
+  titleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingRight: 16, // 오른쪽 여백 추가
+  },
+  addButton: {
+    backgroundColor: '#009984',
+    borderRadius: 8,
+    paddingHorizontal: 12, 
+    maxWidth: '30%', 
+  },
+  addButtonText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center', 
+  },
   subTitle: { //구독관리 텍스트
-    marginTop:13,
+    marginTop: 13, // 여기 쉼표 추가
     fontSize: 16,
     fontWeight: 'bold',
-    color : '#009984',
-    marginLeft :5,
+    color: '#009984',
+    marginLeft: 5,
+    flex: 1,
   },
+
   description: { //현재 n개의 구독하고있어요 
     fontSize: 22,
     color: '#1A1A1A',
