@@ -1,4 +1,3 @@
-// src/pages/GoalScreen.js
 import React from 'react';
 import {
   View,
@@ -11,7 +10,7 @@ import {
   StatusBar,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import GoalCard from '../../components/Home/GoalCard';
+import GoalCard from '../../components/HomeTab/GoalCard';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -42,13 +41,13 @@ const GoalScreen = ({ navigation }) => {
       image: require('../../assets/ipad.png'),
     },
     {
-        id: '4',
-        title: '아이패드 미니',
-        level: 4,
-        progress: 34,
-        status: '목표를 위해 가는 중',
-        image: require('../../assets/ipad.png'),
-      },
+      id: '4',
+      title: '아이패드 미니',
+      level: 4,
+      progress: 34,
+      status: '목표를 위해 가는 중',
+      image: require('../../assets/ipad.png'),
+    },
   ];
 
   return (
@@ -64,21 +63,29 @@ const GoalScreen = ({ navigation }) => {
 
       {/* 제목 및 설명 */}
       <View style={styles.titleContainer}>
-        <Text style={styles.subTitle}>목표 물건</Text>
+        <View style={styles.titleRow}>
+          <Text style={styles.subTitle}>목표 물건</Text>
+          {/* 목표 추가 버튼 */}
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => navigation.navigate('GoalAddScreen')} // 화면 전환
+          >
+            <Text style={styles.addButtonText}>+ 목표 추가</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.description}>현재 {goals.length}개의 목표를 설정했어요</Text>
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => alert('목표 추가하기')}
-        >
-          <Text style={styles.addButtonText}>+ 목표 추가</Text>
-        </TouchableOpacity>
       </View>
 
       {/* 목표 카드 목록 */}
       <FlatList
         data={goals}
         renderItem={({ item }) => (
-          <View style={styles.cardWrapper}>
+          <TouchableOpacity
+            style={styles.cardWrapper}
+            onPress={() =>
+              navigation.navigate('GoalDetail', { goal: item }) // 'GoalDetail'로 전환하며 클릭한 목표 데이터 전달
+            }
+          >
             <GoalCard
               title={item.title}
               level={item.level}
@@ -86,7 +93,7 @@ const GoalScreen = ({ navigation }) => {
               status={item.status}
               image={item.image}
             />
-          </View>
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
@@ -98,7 +105,7 @@ const GoalScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#ffffff',
   },
   header: {
     flexDirection: 'row',
@@ -126,29 +133,46 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    marginBottom: 10,
   },
-  subTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#00796b',
-  },
-  description: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 4,
+  titleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: -5,
+    paddingRight: 16, // 오른쪽 여백 추가
   },
   addButton: {
-    backgroundColor: '#00796b',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    backgroundColor: '#00AB96',
     borderRadius: 8,
-    alignSelf: 'flex-end',
-    marginTop: 8,
+    paddingHorizontal: 12,
+    maxWidth: '30%',
+    height: 30,
+    justifyContent: 'center', // 세로 방향 가운데 정렬
+    alignItems: 'center', // 가로 방향 가운데 정렬
+    marginTop: 26, // 버튼의 상단 간격 추가
   },
   addButtonText: {
-    color: 'white',
+    fontSize: 14,
     fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+  },
+  subTitle: {
+    marginTop: 13, // 여기 쉼표 추가
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#009984',
+    marginLeft: 5,
+    flex: 1,
+  },
+  description: {
+    fontSize: 20,
+    color: '#1A1A1A',
+    marginTop: 4,
+    fontWeight: 'bold',
+    marginLeft: 5,
+    marginBottom: 15,
   },
   listContainer: {
     paddingHorizontal: 16,

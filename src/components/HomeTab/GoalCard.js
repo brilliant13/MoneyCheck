@@ -64,11 +64,13 @@ const styles = StyleSheet.create({
     padding: 15, // 내부 여백 줄임
     marginBottom: 16, // 카드 간 여백 줄임
     shadowColor: '#000',
-    shadowOpacity: 0.05, // 그림자 투명도 줄임
-    shadowRadius: 3, // 그림자 반경 줄임
-    elevation: 2,
-    width: screenWidth * 0.9,
+    //shadowOpacity: 0.05, // 그림자 투명도 줄임
+    //shadowRadius: 3, // 그림자 반경 줄임
+    //elevation: 2,
+    width: screenWidth * 0.89,
     alignSelf: 'center',
+    borderWidth: 1, // 테두리 두께
+    borderColor: '#E0E0E0', // 테두리 색상
   },
   header: {
     flexDirection: 'row',
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     position: 'absolute', // Goal을 Progress Bar와 맞닿게
     right: 0, // 오른쪽 끝에 위치
     bottom: 0, // Progress Bar 바로 위 맞춤
-    marginRight: 15, // 약간 겹치도록 조정
+    marginRight: 12, // 약간 겹치도록 조정
   },
 });
 
