@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,28 +6,26 @@ import {
   Dimensions,
   FlatList,
   TouchableWithoutFeedback,
+  Image,
 } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { useNavigation } from '@react-navigation/native';
-import CustomHeader from '../../components/CustomHeader';
-import GoalCard from '../../components/Home/GoalCard';
-import SubscriptionCard from '../../components/Home/SubscriptionCard';
+import GoalCard from '../../components/HomeTab/GoalCard';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const HomeScreen = () => {
-  const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 상태
-  const navigation = useNavigation(); // 네비게이션 객체
-
-  // 목표 데이터
-  const goals = [
+const HomeScreen = ({ route }) => {
+  const [goals, setGoals] = useState([
     {
       id: '1',
       title: '맥북',
       level: 1,
       progress: 50,
       status: '목표를 위해 가는 중',
-      image: require('../../assets/applewatch.png'),
+      image: require('../../assets/macbook.png'),
+      targetAmount: 2000000, // 목표 금액
+      targetMonths: 12, // 목표 개월수
+      paymentDay: 15, // 월 결제일
     },
     {
       id: '2',
@@ -36,14 +34,20 @@ const HomeScreen = () => {
       progress: 30,
       status: '목표를 위해 가는 중',
       image: require('../../assets/applewatch.png'),
+      targetAmount: 500000, // 목표 금액
+      targetMonths: 6, // 목표 개월수
+      paymentDay: 5, // 월 결제일
     },
     {
       id: '3',
       title: '아이패드',
-      level: 4,
+      level: 1,
       progress: 87,
       status: '목표를 위해 가는 중',
       image: require('../../assets/ipad.png'),
+      targetAmount: 800000, // 목표 금액
+      targetMonths: 10, // 목표 개월수
+      paymentDay: 10, // 월 결제일
     },
     {
       id: '4',
@@ -52,33 +56,49 @@ const HomeScreen = () => {
       progress: 34,
       status: '목표를 위해 가는 중',
       image: require('../../assets/ipad.png'),
+      targetAmount: 700000, // 목표 금액
+      targetMonths: 8, // 목표 개월수
+      paymentDay: 20, // 월 결제일
     },
-  ];
+  ]);
 
-  // 구독 데이터
-  const subscriptions = [
-    { id: '1', title: 'Netflix', price: 12000 },
-    { id: '2', title: 'Spotify', price: 8000 },
-  ];
+  const [subscriptions, setSubscriptions] = useState([
+    { id: '1', title: 'TVING', icon: require('../../assets/tving.png') },
+    { id: '2', title: 'Netflix', icon: require('../../assets/netflix.png') },
+    { id: '3', title: 'Disney+', icon: require('../../assets/disney.png') },
+  ]);
+
+  const [currentPage, setCurrentPage] = useState(0); // currentPage 상태 추가
+  const navigation = useNavigation();
+
+  // 새로운 목표 추가 처리
+  useEffect(() => {
+    if (route.params?.newGoal) {
+      setGoals((prevGoals) => [...prevGoals, route.params.newGoal]);
+    }
+  }, [route.params?.newGoal]);
+
+  // 새로운 구독 추가 처리
+  useEffect(() => {
+    if (route.params?.newSubscription) {
+      setSubscriptions((prev) => [...prev, route.params.newSubscription]);
+    }
+  }, [route.params?.newSubscription]);
 
   return (
     <View style={styles.container}>
-      {/* 상단 커스텀 헤더
-      <CustomHeader title="Home" /> */}
-
-      {/* 목표 목록 (뷰페이저) */}
+      {/* 목표 목록 */}
       <Text style={styles.sectionTitle}>목표 목록</Text>
       <PagerView
         style={styles.pagerView}
         initialPage={0}
-        onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} // 페이지 변경 시 업데이트
+        onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} // currentPage 업데이트
       >
         {goals.map((goal, index) => (
           <View key={index} style={styles.page}>
-            {/* 클릭 이벤트 추가 */}
             <TouchableWithoutFeedback
               onPress={() =>
-                navigation.navigate('GoalScreen', { goal }) // GoalScreen으로 전환
+                navigation.navigate('GoalScreen', { goal })
               }
             >
               <View>
@@ -108,16 +128,28 @@ const HomeScreen = () => {
         ))}
       </View>
 
-      {/* 구독 목록 */}
-      <Text style={styles.sectionTitle}>구독 목록</Text>
-      <FlatList
-        data={subscriptions}
-        renderItem={({ item }) => (
-          <SubscriptionCard title={item.title} price={item.price} />
-        )}
-        keyExtractor={(item) => item.id}
-        style={styles.list}
-      />
+      {/* 구독 관리 */}
+      <View style={styles.subscriptionContainer}>
+        <View style={styles.subscriptionHeader}>
+          <Text style={styles.subscriptionTitle}>구독 관리</Text>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('SubscriptionScreen')}>
+            <Text style={styles.moreText}>더보기{`>`} </Text>
+          </TouchableWithoutFeedback>
+        </View>
+        <Text style={styles.subscriptionSubtitle}>{subscriptions.length}개 구독 중</Text>
+        <FlatList
+          data={subscriptions}
+          horizontal
+          renderItem={({ item }) => (
+            <View style={styles.subscriptionIconWrapper}>
+              <Image source={item.icon} style={styles.subscriptionIcon} />
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.subscriptionList}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
     </View>
   );
 };
@@ -125,7 +157,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#ffffff',
     paddingTop: 16,
   },
   sectionTitle: {
@@ -135,20 +167,18 @@ const styles = StyleSheet.create({
     color: '#222',
   },
   pagerView: {
-    height: 210, // 높이 조정
+    height: 220,
     marginBottom: 5,
-    width: screenWidth * 0.9, // 너비를 화면 너비의 90%로 조정
-    alignSelf: 'center', // 뷰페이저 중앙 정렬
+    width: screenWidth * 0.9,
+    alignSelf: 'center',
+    marginTop: 20,
   },
   page: {
     justifyContent: 'center',
     alignItems: 'center',
     width: screenWidth * 0.9,
     alignSelf: 'center',
-  },
-  list: {
-    marginBottom: 16,
-    width: screenWidth * 0.9,
+    height: 230,
   },
   indicatorContainer: {
     flexDirection: 'row',
@@ -164,6 +194,53 @@ const styles = StyleSheet.create({
   },
   activeIndicator: {
     backgroundColor: '#32CD32',
+  },
+  subscriptionContainer: {
+    backgroundColor: '#F9F9F9',
+    borderRadius: 12,
+    padding: 16,
+    marginHorizontal: 16,
+    marginTop: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.0,
+    shadowRadius: 0,
+    elevation: 1,
+    borderWidth: 1,
+    borderColor: '#ECECEC',
+  },
+  subscriptionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  subscriptionTitle: {
+    fontSize: 14,
+    color: '#333',
+  },
+  subscriptionSubtitle: {
+    fontSize: 18,
+    color: '#666',
+    marginBottom: 16,
+    fontWeight: 'bold',
+  },
+  moreText: {
+    fontSize: 12,
+    color: '#B4B4B4',
+    textAlign: 'right',
+  },
+  subscriptionList: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  subscriptionIconWrapper: {
+    marginRight: 12,
+    alignItems: 'center',
+  },
+  subscriptionIcon: {
+    width: 58,
+    height: 58,
+    borderRadius: 12,
   },
 });
 
