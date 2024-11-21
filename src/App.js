@@ -20,7 +20,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* TabNavigator를 메인 화면으로 설정 */}
         <Stack.Screen name="Main" component={TabNavigator} />
-        {/* GoalScreen 추가 */}
+        {/* TabNavigator에 포함되지 않는 화면 관리 */}
         <Stack.Screen name="GoalScreen" component={GoalScreen} />
         <Stack.Screen name="GoalDetail" component={GoalDetailScreen} />
         <Stack.Screen name="SubscriptionScreen" component={SubscriptionScreen} />

@@ -1,5 +1,4 @@
-// src/pages/HomeScreen.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,63 +10,67 @@ import {
 } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { useNavigation } from '@react-navigation/native';
-import CustomHeader from '../../components/CustomHeader';
 import GoalCard from '../../components/Home/GoalCard';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const HomeScreen = () => {
-  const [currentPage, setCurrentPage] = useState(0);
+const HomeScreen = ({ route }) => {
+  const [goals, setGoals] = useState([
+    {
+      id: '1',
+      title: '맥북',
+      level: 1,
+      progress: 50,
+      status: '목표를 위해 가는 중',
+      image: require('../../assets/macbook.png'),
+      targetAmount: 2000000, // 목표 금액
+      targetMonths: 12, // 목표 개월수
+      paymentDay: 15, // 월 결제일
+    },
+    {
+      id: '2',
+      title: '애플워치',
+      level: 1,
+      progress: 30,
+      status: '목표를 위해 가는 중',
+      image: require('../../assets/applewatch.png'),
+      targetAmount: 500000, // 목표 금액
+      targetMonths: 6, // 목표 개월수
+      paymentDay: 5, // 월 결제일
+    },
+    {
+      id: '3',
+      title: '아이패드',
+      level: 1,
+      progress: 87,
+      status: '목표를 위해 가는 중',
+      image: require('../../assets/ipad.png'),
+      targetAmount: 800000, // 목표 금액
+      targetMonths: 10, // 목표 개월수
+      paymentDay: 10, // 월 결제일
+    },
+    {
+      id: '4',
+      title: '아이패드 미니',
+      level: 4,
+      progress: 34,
+      status: '목표를 위해 가는 중',
+      image: require('../../assets/ipad.png'),
+      targetAmount: 700000, // 목표 금액
+      targetMonths: 8, // 목표 개월수
+      paymentDay: 20, // 월 결제일
+    },
+  ]);
+
+  const [currentPage, setCurrentPage] = useState(0); // currentPage 상태 추가
   const navigation = useNavigation();
 
-  const goals = [
-      {
-        id: '1',
-        title: '맥북',
-        level: 1,
-        progress: 50,
-        status: '목표를 위해 가는 중',
-        image: require('../../assets/macbook.png'),
-        targetAmount: 2000000, // 목표 금액
-        targetMonths: 12, // 목표 개월수
-        paymentDay: 15, // 월 결제일
-      },
-      {
-        id: '2',
-        title: '애플워치',
-        level: 1,
-        progress: 30,
-        status: '목표를 위해 가는 중',
-        image: require('../../assets/applewatch.png'),
-        targetAmount: 500000, // 목표 금액
-        targetMonths: 6, // 목표 개월수
-        paymentDay: 5, // 월 결제일
-      },
-      {
-        id: '3',
-        title: '아이패드',
-        level: 1,
-        progress: 87,
-        status: '목표를 위해 가는 중',
-        image: require('../../assets/ipad.png'),
-        targetAmount: 800000, // 목표 금액
-        targetMonths: 10, // 목표 개월수
-        paymentDay: 10, // 월 결제일
-      },
-      {
-        id: '4',
-        title: '아이패드 미니',
-        level: 4,
-        progress: 34,
-        status: '목표를 위해 가는 중',
-        image: require('../../assets/ipad.png'),
-        targetAmount: 700000, // 목표 금액
-        targetMonths: 8, // 목표 개월수
-        paymentDay: 20, // 월 결제일
-      },
-    ];
-
-
+  // 새로운 목표 추가 처리
+  useEffect(() => {
+    if (route.params?.newGoal) {
+      setGoals((prevGoals) => [...prevGoals, route.params.newGoal]);
+    }
+  }, [route.params?.newGoal]);
 
   const subscriptions = [
     { id: '1', title: 'TVING', icon: require('../../assets/tving.png') },
@@ -84,7 +87,7 @@ const HomeScreen = () => {
       <PagerView
         style={styles.pagerView}
         initialPage={0}
-        onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
+        onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} // currentPage 업데이트
       >
         {goals.map((goal, index) => (
           <View key={index} style={styles.page}>
@@ -163,14 +166,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     width: screenWidth * 0.9,
     alignSelf: 'center',
-    marginTop : 20,
+    marginTop: 20,
   },
   page: {
     justifyContent: 'center',
     alignItems: 'center',
     width: screenWidth * 0.9,
     alignSelf: 'center',
-    height : 230
+    height: 230,
   },
   indicatorContainer: {
     flexDirection: 'row',
@@ -197,8 +200,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.0,
     shadowRadius: 0,
     elevation: 1,
-    borderWidth: 1, // 테두리 두께
-    borderColor: '#ECECEC', // 테두리 색상
+    borderWidth: 1,
+    borderColor: '#ECECEC',
   },
   subscriptionHeader: {
     flexDirection: 'row',
@@ -215,7 +218,6 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 16,
     fontWeight: 'bold',
-
   },
   moreText: {
     fontSize: 12,
