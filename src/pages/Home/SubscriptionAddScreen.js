@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,30 @@ import { Ionicons } from '@expo/vector-icons';
 
 const SubscriptionAddScreen = ({ route, navigation }) => {
   const { icon, name } = route.params; // 전달된 데이터 받기
+  const [monthlyFee, setMonthlyFee] = useState('');
+  const [paymentDay, setPaymentDay] = useState('');
+
+  const handleAddSubscription = () => {
+    if (!monthlyFee || !paymentDay) {
+      alert('모든 필드를 입력해주세요.');
+      return;
+    }
+
+    // 새로운 구독 정보 생성
+    const newSubscription = {
+      id: Date.now().toString(),
+      title: name,
+      icon: icon,
+      monthlyFee: `월 ${monthlyFee}원 결제`,
+      nextPayment: `매월 ${paymentDay}일`,
+    };
+
+    // HomeScreen으로 이동하면서 새로운 구독 정보 전달
+    navigation.navigate('Main', {
+      screen: 'Home',
+      params: { newSubscription },
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -27,7 +51,7 @@ const SubscriptionAddScreen = ({ route, navigation }) => {
 
       {/* 제목 */}
       <View style={styles.titleContainer}>
-        <Text style={styles.subTitle}>구독추가</Text>
+        <Text style={styles.subTitle}>구독 추가</Text>
         <Text style={styles.description}>구독을 추가하세요</Text>
       </View>
 
@@ -44,17 +68,21 @@ const SubscriptionAddScreen = ({ route, navigation }) => {
           style={styles.input}
           placeholder="월 결제 금액을 입력해주세요"
           keyboardType="numeric"
+          value={monthlyFee}
+          onChangeText={setMonthlyFee}
         />
         <Text style={styles.label}>월 결제일</Text>
         <TextInput
           style={styles.input}
           placeholder="월 결제일을 입력해주세요"
           keyboardType="numeric"
+          value={paymentDay}
+          onChangeText={setPaymentDay}
         />
       </View>
 
       {/* 구독 추가 버튼 */}
-      <TouchableOpacity style={styles.addButton} onPress={() => alert('구독이 추가되었습니다!')}>
+      <TouchableOpacity style={styles.addButton} onPress={handleAddSubscription}>
         <Text style={styles.addButtonText}>구독 추가하기</Text>
       </TouchableOpacity>
     </View>

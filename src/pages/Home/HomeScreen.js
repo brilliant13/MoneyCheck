@@ -62,6 +62,12 @@ const HomeScreen = ({ route }) => {
     },
   ]);
 
+  const [subscriptions, setSubscriptions] = useState([
+    { id: '1', title: 'TVING', icon: require('../../assets/tving.png') },
+    { id: '2', title: 'Netflix', icon: require('../../assets/netflix.png') },
+    { id: '3', title: 'Disney+', icon: require('../../assets/disney.png') },
+  ]);
+
   const [currentPage, setCurrentPage] = useState(0); // currentPage 상태 추가
   const navigation = useNavigation();
 
@@ -72,13 +78,12 @@ const HomeScreen = ({ route }) => {
     }
   }, [route.params?.newGoal]);
 
-  const subscriptions = [
-    { id: '1', title: 'TVING', icon: require('../../assets/tving.png') },
-    { id: '2', title: 'Netflix', icon: require('../../assets/netflix.png') },
-    { id: '3', title: 'Disney+', icon: require('../../assets/disney.png') },
-    { id: '4', title: 'Goopang', icon: require('../../assets/coopang.png') },
-    { id: '5', title: 'Watcha', icon: require('../../assets/watcha.png') },
-  ];
+  // 새로운 구독 추가 처리
+  useEffect(() => {
+    if (route.params?.newSubscription) {
+      setSubscriptions((prev) => [...prev, route.params.newSubscription]);
+    }
+  }, [route.params?.newSubscription]);
 
   return (
     <View style={styles.container}>
@@ -131,7 +136,7 @@ const HomeScreen = ({ route }) => {
             <Text style={styles.moreText}>더보기{`>`} </Text>
           </TouchableWithoutFeedback>
         </View>
-        <Text style={styles.subscriptionSubtitle}>5개 구독 중</Text>
+        <Text style={styles.subscriptionSubtitle}>{subscriptions.length}개 구독 중</Text>
         <FlatList
           data={subscriptions}
           horizontal
