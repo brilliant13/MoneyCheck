@@ -6,7 +6,7 @@ export default StyleSheet.create({
       position: 'absolute',
       right: 20,
       bottom: 100, // 하단 네비게이션 바 위에 배치
-      backgroundColor: '#4CAF50',
+      backgroundColor: '#00BFA5',
       width: 60,
       height: 60,
       borderRadius: 30,
