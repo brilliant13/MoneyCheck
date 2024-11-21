@@ -12,24 +12,27 @@ export default StyleSheet.create({
     marginBottom: 25,
     paddingHorizontal: 10,
   },
-
   monthSelector: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   monthText: {
-    fontSize: 20,
+    fontSize: 21,
     fontWeight: 'bold',
     color: '#4CAF50',
   },
   todayButton: {
     backgroundColor: '#E3F2FD',
-    padding: 5,
+    padding: 3,
+    width: 40,
     borderRadius: 5,
   },
   todayText: {
-    color: '#4CAF50',
+    // color: '#4CAF50',
+    color: 'red',
     fontWeight: 'bold',
+    fontSize: 10,
+    textAlign: 'center',
   },
   
   //캘린더 모달
@@ -72,20 +75,6 @@ export default StyleSheet.create({
     color: '#D32F2F',
     fontWeight: 'bold',
   },
-
-  // monthItem: {
-    //   padding: 15,
-    //   backgroundColor: '#fff',
-    //   marginVertical: 5,
-    //   borderRadius: 10,
-    //   width: '80%',
-    //   alignItems: 'center',
-    // },
-    // monthItemText: {
-      //   fontSize: 18,
-      //   fontWeight: 'bold',
-      //   color: '#4CAF50',
-      // },
       
       //캘린더
   calendarContainer: {
@@ -108,7 +97,8 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   selectedDate: {
-    color: '#4CAF50',
+    // color: '#4CAF50',
+    color: 'red',
     fontWeight: 'bold',
   },
 
