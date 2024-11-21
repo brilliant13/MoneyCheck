@@ -10,8 +10,8 @@ import {
   StatusBar,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import GoalCard from '../../components/Home/GoalCard';
-import SavingItem from '../../components/Home/SavingGoal'; // SavingItem 컴포넌트 가져오기
+import GoalCard from '../../components/HomeTab/GoalCard';
+import SavingItem from '../../components/HomeTab/SavingGoal'; // SavingItem 컴포넌트 가져오기
 
 const { width: screenWidth } = Dimensions.get('window');
 

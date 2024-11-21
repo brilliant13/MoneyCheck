@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { useNavigation } from '@react-navigation/native';
-import GoalCard from '../../components/Home/GoalCard';
+import GoalCard from '../../components/HomeTab/GoalCard';
 
 const { width: screenWidth } = Dimensions.get('window');
 

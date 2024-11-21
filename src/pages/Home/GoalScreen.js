@@ -10,7 +10,7 @@ import {
   StatusBar,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import GoalCard from '../../components/Home/GoalCard';
+import GoalCard from '../../components/HomeTab/GoalCard';
 
 const { width: screenWidth } = Dimensions.get('window');
 

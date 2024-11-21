@@ -9,7 +9,7 @@ import {
   StatusBar,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import SubscriptionItem from '../../components/Home/SubscriptionItem';
+import SubscriptionItem from '../../components/HomeTab/SubscriptionItem';
 
 const subscriptions = [
   { id: '1', title: '티빙', icon: require('../../assets/tving.png'), nextPayment: '11월 15일', monthlyFee: '월 9,500원 결제' },
