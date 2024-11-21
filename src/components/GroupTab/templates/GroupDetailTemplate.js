@@ -6,23 +6,20 @@ import GroupTabs from '../molecules/GroupTabs';
 import TransactionSummary from '../organisms/TransactionSummary';
 import GoalCard from '../organisms/GoalCard';
 
-const GroupDetailTemplate = () => (
+const GroupDetailTemplate = ({ goals }) => (
   <ScrollView style={styles.container}>
     <GroupTabs />
     <TransactionSummary />
     <View style={styles.goalContainer}>
-      <GoalCard 
-        title="호텔 뷔페"
-        emoji="🍽️"
-        level={1}
-        progress={0.4}
-      />
-      <GoalCard 
-        title="미국여행"
-        emoji="🇺🇸"
-        level={1}
-        progress={0.4}
-      />
+      {goals.map((goal, index) => (
+        <GoalCard 
+          key={index}
+          title={goal.title}
+          emoji={goal.emoji}
+          level={goal.level}
+          progress={goal.progress}
+        />
+      ))}
     </View>
   </ScrollView>
 );

@@ -4,38 +4,47 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import TransactionGroup from '../molecules/TransactionGroup';
 import ShowMoreButton from '../atoms/ShowMoreButton';
+import transactionData from '../../../data/transactions.json';
 
 const TransactionSummary = () => {
-  const incomeItems = [
-    { name: '경민', amount: '10,000' },
-    { name: '차민', amount: '20,000' }
-  ];
-
-  const expenseItems = [
-    { name: '경민', amount: '10,000' },
-    { name: '차민', amount: '20,000' }
-  ];
-
   return (
     <View style={styles.container}>
-      <TransactionGroup type="income" items={incomeItems} />
-      <TransactionGroup type="expense" items={expenseItems} />
-      <ShowMoreButton onPress={() => {}} />
+      <View style={styles.summaryContainer}>
+        <View style={styles.groupContainer}>
+          <TransactionGroup type="income" items={transactionData.income} />
+          <ShowMoreButton onPress={() => {}} />
+        </View>
+        <View style={styles.divider} />
+        <View style={styles.groupContainer}>
+          <TransactionGroup type="expense" items={transactionData.expense} />
+          <ShowMoreButton onPress={() => {}} />
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    padding: 16,
+  },
+  summaryContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     backgroundColor: '#fff',
-    marginVertical: 8,
     borderRadius: 12,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  }
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+    padding: 16,
+  },
+  groupContainer: {
+    flex: 1,
+  },
+  divider: {
+    width: 1,
+    backgroundColor: '#E5E5E5',
+    marginHorizontal: 8,
+  },
 });
 
 export default TransactionSummary;

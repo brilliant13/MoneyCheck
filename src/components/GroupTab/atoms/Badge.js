@@ -3,9 +3,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Badge = ({ level, backgroundColor }) => (
+const Badge = ({ level, backgroundColor, textColor }) => (
   <View style={[styles.container, { backgroundColor }]}>
-    <Text style={styles.text}>Lv.{level}</Text>
+    <Text style={[styles.text, { color: textColor }]}>Lv.{level}</Text>
   </View>
 );
 
@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   text: {
-    color: '#fff',
     fontSize: 12,
     fontWeight: '500',
   }

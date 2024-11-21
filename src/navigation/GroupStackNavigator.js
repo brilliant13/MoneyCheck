@@ -16,7 +16,7 @@ const GroupStackNavigator = () => {
       <Stack.Screen 
         name="GroupDetail" 
         component={GroupDetail}
-        options={{ title: '공동관리' }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

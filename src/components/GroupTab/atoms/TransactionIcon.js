@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 
 const TransactionIcon = ({ type }) => {
   const isIncome = type === 'income';
@@ -9,27 +9,30 @@ const TransactionIcon = ({ type }) => {
       styles.container, 
       { backgroundColor: isIncome ? '#FFE8E8' : '#E8F4FF' }
     ]}>
-      <Text style={[
-        styles.icon, 
-        { color: isIncome ? '#FF5252' : '#2196F3' }
-      ]}>
-        {isIncome ? '수입' : '지출'}
-      </Text>
+      <Image 
+        source={isIncome 
+          ? require('../../../../assets/Jiyoon/Group/suip.png')
+          : require('../../../../assets/Jiyoon/Group/jichul.png')
+        }
+        style={styles.icon}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 8,
   },
   icon: {
-    fontSize: 14,
-    fontWeight: '600',
+    width: 18,
+    height: 18,
+    resizeMode: 'contain'
   }
 });
 
