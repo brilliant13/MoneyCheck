@@ -12,11 +12,11 @@ import { Ionicons } from '@expo/vector-icons';
 import SubscriptionItem from '../../components/Home/SubscriptionItem';
 
 const subscriptions = [
-  { id: '1', title: 'TVING', icon: require('../../assets/tving.png'), nextPayment: '11월 15일', monthlyFee: '월 9,500원 결제' },
-  { id: '2', title: 'Netflix', icon: require('../../assets/netflix.png'), nextPayment: '11월 21일', monthlyFee: '월 13,500원 결제' },
-  { id: '3', title: 'Disney+', icon: require('../../assets/disney.png'), nextPayment: '11월 21일', monthlyFee: '월 9,500원 결제' },
-  { id: '4', title: 'Coupang Play', icon: require('../../assets/coopang.png'), nextPayment: '11월 8일', monthlyFee: '월 9,500원 결제' },
-  { id: '5', title: 'Watcha', icon: require('../../assets/watcha.png'), nextPayment: '11월 17일', monthlyFee: '월 12,900원 결제' },
+  { id: '1', title: '티빙', icon: require('../../assets/tving.png'), nextPayment: '11월 15일', monthlyFee: '월 9,500원 결제' },
+  { id: '2', title: '넷플릭스', icon: require('../../assets/netflix.png'), nextPayment: '11월 21일', monthlyFee: '월 13,500원 결제' },
+  { id: '3', title: '디즈니 플러스', icon: require('../../assets/disney.png'), nextPayment: '11월 21일', monthlyFee: '월 9,500원 결제' },
+  { id: '4', title: '쿠팡 플레이', icon: require('../../assets/coopang.png'), nextPayment: '11월 8일', monthlyFee: '월 9,500원 결제' },
+  { id: '5', title: '왓챠', icon: require('../../assets/watcha.png'), nextPayment: '11월 17일', monthlyFee: '월 12,900원 결제' },
 ];
 
 const SubscriptionScreen = ({ navigation }) => {
@@ -68,7 +68,7 @@ const SubscriptionScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#ffffff',
   },
   header: {
     flexDirection: 'row',
@@ -96,20 +96,25 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    // paddingVertical: 0,
+    marginBottom : 10,
   },
   titleRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: -5,
     paddingRight: 16, // 오른쪽 여백 추가
   },
   addButton: {
-    backgroundColor: '#009984',
+    backgroundColor: '#00AB96',
     borderRadius: 8,
     paddingHorizontal: 12, 
     maxWidth: '30%', 
+    height : 30,
+    justifyContent: 'center', // 세로 방향 가운데 정렬
+    alignItems: 'center', // 가로 방향 가운데 정렬
+    marginTop: 26, // 버튼의 상단 간격 추가
   },
   addButtonText: {
     fontSize: 14,
@@ -132,6 +137,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontWeight: 'bold',  
     marginLeft :5,
+    marginBottom : 15,
   },
   list: {
     paddingHorizontal: 16,

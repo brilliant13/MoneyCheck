@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0f7fa', // 배경 색상
     paddingHorizontal: 8, // 좌우 여백
     paddingVertical: 4, // 상하 여백
-    borderRadius: 10, // 모서리 둥글게
+    borderRadius: 5, // 모서리 둥글게
     textAlign: 'center', // 텍스트 중앙 정렬
     alignSelf: 'flex-end', // 부모의 오른쪽 위로 정렬
     marginBottom : 20,
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6C6C6C',
     fontWeight: 'semibold',
+    marginTop : 10,
   },
   nextPayment: { //다음 결제 일자
     fontSize: 14,
@@ -89,6 +90,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#009984',
+    marginTop : 10,
+
   },
 });
 

@@ -21,23 +21,53 @@ const HomeScreen = () => {
   const navigation = useNavigation();
 
   const goals = [
-    {
-      id: '1',
-      title: '맥북',
-      level: 1,
-      progress: 50,
-      status: '목표를 위해 가는 중',
-      image: require('../../assets/applewatch.png'),
-    },
-    {
-      id: '2',
-      title: '애플워치',
-      level: 1,
-      progress: 30,
-      status: '목표를 위해 가는 중',
-      image: require('../../assets/applewatch.png'),
-    },
-  ];
+      {
+        id: '1',
+        title: '맥북',
+        level: 1,
+        progress: 50,
+        status: '목표를 위해 가는 중',
+        image: require('../../assets/macbook.png'),
+        targetAmount: 2000000, // 목표 금액
+        targetMonths: 12, // 목표 개월수
+        paymentDay: 15, // 월 결제일
+      },
+      {
+        id: '2',
+        title: '애플워치',
+        level: 1,
+        progress: 30,
+        status: '목표를 위해 가는 중',
+        image: require('../../assets/applewatch.png'),
+        targetAmount: 500000, // 목표 금액
+        targetMonths: 6, // 목표 개월수
+        paymentDay: 5, // 월 결제일
+      },
+      {
+        id: '3',
+        title: '아이패드',
+        level: 1,
+        progress: 87,
+        status: '목표를 위해 가는 중',
+        image: require('../../assets/ipad.png'),
+        targetAmount: 800000, // 목표 금액
+        targetMonths: 10, // 목표 개월수
+        paymentDay: 10, // 월 결제일
+      },
+      {
+        id: '4',
+        title: '아이패드 미니',
+        level: 4,
+        progress: 34,
+        status: '목표를 위해 가는 중',
+        image: require('../../assets/ipad.png'),
+        targetAmount: 700000, // 목표 금액
+        targetMonths: 8, // 목표 개월수
+        paymentDay: 20, // 월 결제일
+      },
+    ];
+
+
 
   const subscriptions = [
     { id: '1', title: 'TVING', icon: require('../../assets/tving.png') },
@@ -119,7 +149,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#ffffff',
     paddingTop: 16,
   },
   sectionTitle: {
@@ -129,16 +159,18 @@ const styles = StyleSheet.create({
     color: '#222',
   },
   pagerView: {
-    height: 210,
+    height: 220,
     marginBottom: 5,
     width: screenWidth * 0.9,
     alignSelf: 'center',
+    marginTop : 20,
   },
   page: {
     justifyContent: 'center',
     alignItems: 'center',
     width: screenWidth * 0.9,
     alignSelf: 'center',
+    height : 230
   },
   indicatorContainer: {
     flexDirection: 'row',
@@ -156,15 +188,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#32CD32',
   },
   subscriptionContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F9F9F9',
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 16,
     marginTop: 16,
     shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOpacity: 0.0,
+    shadowRadius: 0,
+    elevation: 1,
+    borderWidth: 1, // 테두리 두께
+    borderColor: '#ECECEC', // 테두리 색상
   },
   subscriptionHeader: {
     flexDirection: 'row',
