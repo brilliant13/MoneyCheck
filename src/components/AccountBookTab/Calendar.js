@@ -63,13 +63,14 @@ import styles from '../../styles/AccountBookTabStyles/CalendarStyles';
 
   return (
     <View style={styles.container}>
+      
       <View style={styles.header}>
         {/* 달 선택 */}
         <TouchableOpacity style={styles.monthSelector} onPress={toggleModal}>
           <Text style={styles.monthText}>
             {`${selectedYear}년 ${months[selectedMonthIndex]}`}
           </Text>
-          <Ionicons name="chevron-down-outline" size={20} color="#4CAF50" />
+          <Ionicons name="chevron-down-outline" size={20} color="#009984" />
         </TouchableOpacity>
 
         {/* 오늘 버튼 */}

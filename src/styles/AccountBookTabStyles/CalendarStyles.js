@@ -19,7 +19,7 @@ export default StyleSheet.create({
   monthText: {
     fontSize: 21,
     fontWeight: 'bold',
-    color: '#4CAF50',
+    color: '#009984',
   },
   todayButton: {
     backgroundColor: '#E3F2FD',

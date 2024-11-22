@@ -14,6 +14,10 @@ const incomeData = [
 const IncomeList = () => {
   return (
     <View style={styles.container}>
+      
+
+
+
       {incomeData.map((item) => (
         <View key={item.id} style={styles.itemContainer}>
           <Text style={styles.itemName}>{item.name}</Text>
