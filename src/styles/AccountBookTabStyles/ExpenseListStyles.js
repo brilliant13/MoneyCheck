@@ -122,7 +122,7 @@ export default StyleSheet.create({
   itemAmount: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#FF6F61',
+    color: '#449FFF',
   },
 });
 
