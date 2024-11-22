@@ -67,21 +67,59 @@ export default StyleSheet.create({
     color: '#333333',
     fontSize: 16,
   },
-  closeButton: {
+
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 20,
-    backgroundColor: '#FFCDD2',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+  },
+  confirmButton: {
+    backgroundColor: '#009984',
+    padding: 10,
     borderRadius: 5,
+    marginRight: 10,
+    width: '40%',
+    alignItems: 'center',
+  },
+  confirmButtonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+  closeButton: {
+    backgroundColor: '#FFCDD2',
+    padding: 10,
+    borderRadius: 5,
+    width: '40%',
+    alignItems: 'center',
   },
   closeButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
     color: '#D32F2F',
+    fontWeight: 'bold',
   },
+  
+
+
+
+  // closeButton: {
+  //   marginTop: 20,
+  //   backgroundColor: '#FFCDD2',
+  //   paddingVertical: 10,
+  //   paddingHorizontal: 20,
+  //   borderRadius: 5,
+  // },
+  // closeButtonText: {
+  //   fontSize: 16,
+  //   fontWeight: 'bold',
+  //   color: '#D32F2F',
+  // },
   icon: {
     marginLeft: 5,
     fontSize: 18,
     color: '#4CAF50',
   },
+
+
+
+
+
 });
