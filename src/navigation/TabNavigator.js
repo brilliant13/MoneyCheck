@@ -1,4 +1,5 @@
 // src/navigation/TabNavigator.js
+
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, StyleSheet, Image } from "react-native";
@@ -15,6 +16,10 @@ const moneyBankImage = require("../assets/moneyBox.png");
 const peopleImage = require("../assets/people.png");
 const statsImage = require("../assets/stats.png");
 
+import { Ionicons } from '@expo/vector-icons';
+
+
+
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
@@ -23,9 +28,11 @@ const TabNavigator = () => {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           header: () => {
+
             if (route.name === "Home") {
               return <CustomHeader title="Home" showProfile={true} />;
             } else if (route.name === "Account Book") {
+
               return <CustomHeader title="가계부" />;
             } else if (route.name === "Group Management") {
               return <CustomHeader title="공동관리" />;
@@ -79,7 +86,7 @@ const TabNavigator = () => {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Account Book" component={AccountBookScreen} />
-        <Tab.Screen name="Group Management" component={GroupManagement} />
+        <Tab.Screen name="Group Management" component={GroupStackNavigator} />
         <Tab.Screen name="Statistics" component={Statistics} />
       </Tab.Navigator>
 
