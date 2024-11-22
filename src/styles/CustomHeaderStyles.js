@@ -51,8 +51,8 @@ export default StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 20,
     backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#e0e0e0',
   },
   androidHeader: {
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
