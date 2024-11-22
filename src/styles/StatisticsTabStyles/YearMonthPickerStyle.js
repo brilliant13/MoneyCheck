@@ -7,12 +7,14 @@ const styles = StyleSheet.create({
   selector: {
     flexDirection: "row", // 내부 요소를 가로 방향으로 배치
     alignItems: "center", // 세로 방향 가운데 정렬
+    backgroundColor: "#FFF", // 배경색을 흰색으로 설정
+    marginLeft: 24,
+    paddingTop: 25.5,
     // justifyContent: "space-between", // 양 끝으로 요소 배치
     // borderWidth: 1, // 테두리 두께 설정
     // borderColor: "#CCC", // 테두리 색상 설정
     // borderRadius: 8, // 테두리를 둥글게 설정
-    padding: 12, // 내부 여백 설정
-    backgroundColor: "#FFF", // 배경색을 흰색으로 설정
+    // padding: 12, // 내부 여백 설정
   },
   selectorText: {
     fontSize: 18, // 텍스트 크기 설정
