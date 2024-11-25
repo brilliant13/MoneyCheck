@@ -3,6 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigator from './navigation/TabNavigator';
+import GroupStackNavigator from './navigation/GroupStackNavigator';
 import GoalScreen from './pages/Home/GoalScreen'; // GoalScreen 추가
 import GoalDetailScreen from './pages/Home/GoalDetailScreen'; // GoalScreen 추가
 import SubscriptionScreen from './pages/Home/SubscriptionScreen'; // SubscriptionScreen 추가
@@ -22,7 +23,7 @@ export default function App() {
 
         
         <Stack.Screen name="Main" component={TabNavigator} />
-        {/* TabNavigator에 포함되지 않는 화면 관리 */}
+        <Stack.Screen name="GroupStack" component={GroupStackNavigator} />
         <Stack.Screen name="GoalScreen" component={GoalScreen} />
         <Stack.Screen name="GoalDetail" component={GoalDetailScreen} />
         <Stack.Screen name="SubscriptionScreen" component={SubscriptionScreen} />

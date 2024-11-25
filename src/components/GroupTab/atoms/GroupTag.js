@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     borderColor: CommonStyles.colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 4,
   },
   selected: {
     backgroundColor: CommonStyles.colors.primary,
