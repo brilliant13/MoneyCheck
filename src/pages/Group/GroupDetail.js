@@ -1,3 +1,4 @@
+//src/pages/Group/GroupDetail.js
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { GroupDetailTemplate } from '../../components/GroupTab';
