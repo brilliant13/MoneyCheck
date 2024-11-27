@@ -1,46 +1,31 @@
-//src/pages/LoginScreen.js
-import React, { useState, useEffect } from 'react';
+//src/pages/SignUpScreen.js
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-// Firebase 인증 모듈 가져오기
-import { auth } from '../firebase';
-import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase';// Firebase 모듈 가져오기
+import { createUserWithEmailAndPassword } from 'firebase/auth'; // Firebase 회원가입 함수
 
-const LoginScreen = ({ navigation }) => {
+const SignUpScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleLogin = async () => {
+    const handleSignUp = async () => {
+        if (password !== confirmPassword) {
+            alert('비밀번호가 일치하지 않습니다.');
+            return;
+        }
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log('Login successful:', userCredential.user);
-            alert('로그인 성공!');
-            
-            // Login 화면을 스택에서 제거하고 Main 화면으로 교체
-            navigation.replace('Main'); // navigation.navigate 대신 replace 사용
+            // Firebase에 사용자 등록 요청
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log('User registered:', userCredential.user);
+            alert('회원가입 성공!');
+            // navigation.navigate('Login'); // 회원가입 성공 시 로그인 화면으로 이동
+            navigation.replace('Login');
         } catch (error) {
-            console.error('Login failed:', error.message);
-            alert(`로그인 실패: ${error.message}`);
+            console.error('Sign-Up failed:', error.message);
+            alert(`회원가입 실패: ${error.message}`);
         }
     };
-
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log('User is already logged in:', user.email);
-
-                // 로그인된 사용자라면 Main 화면으로 이동
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Main' }],
-                });
-            } else {
-                console.log('No user is logged in');
-            }
-        });
-
-        return unsubscribe; // 컴포넌트가 언마운트될 때 구독 해제
-    }, []);
 
     return (
         <View style={styles.container}>
@@ -65,12 +50,26 @@ const LoginScreen = ({ navigation }) => {
                     secureTextEntry
                 />
             </View>
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                <Text style={styles.loginButtonText}>로그인</Text>
+
+            <View style={styles.inputContainer}>
+                <Text style={styles.label}>비밀번호 확인</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="비밀번호를 다시 입력해 주세요"
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                    secureTextEntry
+                />
+            </View>
+
+
+
+            <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+                <Text style={styles.signUpButtonText}>회원가입</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                <Text style={styles.signUpText}>
-                    지금 바로 계정을 만들어 보세요 <Text style={styles.signUpLink}>회원가입</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.loginText}>
+                    이미 계정이 있으신가요? <Text style={styles.loginLink}>로그인</Text>
                 </Text>
             </TouchableOpacity>
         </View>
@@ -78,6 +77,7 @@ const LoginScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    
     container: {
         flex: 1,
         padding: 20,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
     },
     inputContainer: {
-        marginBottom: 30,
+        marginBottom: 20,
     },
     label: {
         fontSize: 16,
@@ -101,28 +101,28 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: '#f9f9f9',
     },
-    loginButton: {
+    signUpButton: {
         backgroundColor: '#00c4b4',
         paddingVertical: 15,
         borderRadius: 8,
         marginTop: 20,
     },
-    loginButtonText: {
+    signUpButtonText: {
         color: '#fff',
         fontSize: 18,
         textAlign: 'center',
         fontWeight: 'bold',
     },
-    signUpText: {
+    loginText: {
         color: '#888',
         fontSize: 14,
         marginTop: 20,
         textAlign: 'center',
     },
-    signUpLink: {
+    loginLink: {
         color: '#00c4b4',
         fontWeight: 'bold',
     },
 });
 
-export default LoginScreen;
+export default SignUpScreen;

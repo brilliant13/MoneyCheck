@@ -11,6 +11,7 @@ import SubscriptionAddScreen from './pages/Home/SubscriptionAddScreen'; // Subsc
 import GoalAddScreen from './pages/Home/GoalAddScreen'; // GoalAddScreen 추가
 
 import LoginScreen from './pages/LoginScreen';
+import SignUpScreen from './pages/SignUpScreen'; // 회원가입 스크린 추가
 
 
 import GroupDetail from './pages/Group/GroupDetail'; // GroupDetail 추가
@@ -21,6 +22,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />  
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="GroupDetail" component={GroupDetail} />
         <Stack.Screen name="GoalScreen" component={GoalScreen} />
@@ -29,7 +31,8 @@ export default function App() {
         <Stack.Screen name="SubscriptionListScreen" component={SubscriptionListScreen} />
         <Stack.Screen name="SubscriptionAddScreen" component={SubscriptionAddScreen} />
         <Stack.Screen name="GoalAddScreen" component={GoalAddScreen} />
-      </Stack.Navigator>
+        {/* dd */}
+      </Stack.Navigator> 
     </NavigationContainer>
   );
 }
