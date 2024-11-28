@@ -29,7 +29,7 @@ const GroupTabs = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingTop: 8,
   }
 });
 

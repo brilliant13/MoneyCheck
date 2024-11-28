@@ -28,6 +28,7 @@ const GoalCard = ({ title, emoji, level, progress }) => (
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 0,
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
@@ -63,8 +64,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   treeImage: {
-    width: 40,
-    height: 40,
+    width: 60,
+    height: 60,
     marginBottom: 50,
     resizeMode: 'contain'
   },

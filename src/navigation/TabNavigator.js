@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, StyleSheet, Image } from "react-native";
 import HomeScreen from "../pages/Home/HomeScreen";
 import AccountBookScreen from "../pages/AccountBook";
-import GroupManagement from "../pages/Group/GroupManagement";
+import GroupStackNavigator from "./GroupStackNavigator";
 import Statistics from "../pages/Stats";
 import FloatingButton from "../components/FloatingTab/FloatingButton";
 import CustomHeader from "../components/CustomHeader";
@@ -79,7 +79,7 @@ const TabNavigator = () => {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Account Book" component={AccountBookScreen} />
-        <Tab.Screen name="Group Management" component={GroupManagement} />
+        <Tab.Screen name="Group Management" component={GroupStackNavigator} />
         <Tab.Screen name="Statistics" component={Statistics} />
       </Tab.Navigator>
 

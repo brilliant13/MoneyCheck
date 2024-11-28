@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     padding: 4,
     borderRadius: 4,
     paddingHorizontal: 8,
-
+    marginRight: 12,
   },
   name: {
     fontSize: 14,
@@ -34,12 +34,19 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginLeft: 12,
   },
   currency: {
     fontSize: 12,
     color: '#000',
     fontWeight: 'normal',
   },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    marginVertical: 4,
+  }
 });
 
 export default TransactionItem;

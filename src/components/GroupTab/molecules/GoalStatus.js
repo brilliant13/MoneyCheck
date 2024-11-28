@@ -39,14 +39,17 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     resizeMode: 'contain',
-    transform: [{ translateX: -65 }],
-    zIndex: 1  // 이미지가 프로그레스바 위에 표시되도록
+    transform: [{ translateX: -55 }],
+    zIndex: 1,  // 이미지가 프로그레스바 위에 표시되도록
+    bottom: -20  // -15에서 -5로 수정하여 프로그레스바와 더 가깝게 설정
   },
   goalIcon: {
-    width: 24,
-    height: 24,
+    width: 41,
+    height: 48,
     resizeMode: 'contain',
-    marginLeft: 'auto',
+    position: 'absolute',
+    right: 0,
+    bottom: 0,  // 프로그레스바와 맞닿게 설정
   }
 });
 
