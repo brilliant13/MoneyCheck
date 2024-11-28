@@ -22,6 +22,9 @@ const subscriptionsList = [
   { id: '8', name: '쿠팡 플레이', icon: require('../../assets/coopang.png') },
   { id: '9', name: '왓챠', icon: require('../../assets/watcha.png') },
   { id: '10', name: 'FLO', icon: require('../../assets/flo.png') },
+  { id: '11', name: '배민1플러스', icon: require('../../assets/bemin.png') },
+  { id: '12', name: '요기요', icon: require('../../assets/yogi.png') },
+
 ];
 
 const SubscriptionListScreen = ({ navigation }) => {
