@@ -11,6 +11,8 @@ import {
 import PagerView from 'react-native-pager-view';
 import { useNavigation } from '@react-navigation/native';
 import GoalCard from '../../components/HomeTab/GoalCard';
+import MoneyCard from '../../components/HomeTab/MoneyCard';
+
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -87,6 +89,11 @@ const HomeScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
+
+      {/* MoneyCard 컴포넌트 */}
+      <MoneyCard income="3,333,333" expense="2,222,222" style = {styles.moneyPager}/>
+
+
       {/* 목표 목록 */}
       <Text style={styles.sectionTitle}>목표 목록</Text>
       <PagerView
@@ -164,7 +171,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginVertical: 8,
+    marginBottom: -5,
     color: '#222',
+    marginLeft: screenWidth * 0.05, // pagerView의 왼쪽과 동일한 비율로 설정
+  },
+  moneyPager:{
+    alignSelf: 'center',
+
+
   },
   pagerView: {
     height: 220,
