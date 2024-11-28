@@ -1,3 +1,4 @@
+//src/navigation/GroupStackNavigator.js
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import GroupManagement from '../pages/Group/GroupManagement';

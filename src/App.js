@@ -11,17 +11,19 @@ import SubscriptionListScreen from './pages/Home/SubscriptionListScreen'; // Sub
 import SubscriptionAddScreen from './pages/Home/SubscriptionAddScreen'; // SubscriptionAddScreen 추가
 import GoalAddScreen from './pages/Home/GoalAddScreen'; // GoalAddScreen 추가
 
+import LoginScreen from './pages/LoginScreen';
+import SignUpScreen from './pages/SignUpScreen'; // 회원가입 스크린 추가
 
 
+import GroupDetail from './pages/Group/GroupDetail'; // GroupDetail 추가
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* TabNavigator를 메인 화면으로 설정 */}
-
-        
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />  
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="GroupStack" component={GroupStackNavigator} />
         <Stack.Screen name="GoalScreen" component={GoalScreen} />
@@ -30,10 +32,8 @@ export default function App() {
         <Stack.Screen name="SubscriptionListScreen" component={SubscriptionListScreen} />
         <Stack.Screen name="SubscriptionAddScreen" component={SubscriptionAddScreen} />
         <Stack.Screen name="GoalAddScreen" component={GoalAddScreen} />
-
-
-
-      </Stack.Navigator>
+        {/* dd */}
+      </Stack.Navigator> 
     </NavigationContainer>
   );
 }
