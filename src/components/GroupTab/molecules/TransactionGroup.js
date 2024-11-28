@@ -19,7 +19,8 @@ const TransactionGroup = ({ type, items }) => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    marginBottom: 16
   },
   iconTextContainer: {
     flexDirection: 'row',
