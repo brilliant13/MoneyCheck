@@ -61,15 +61,6 @@ const AddIncome = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* 헤더 */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#3A3A3A" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>수입 추가하기</Text>
-        <View style={{ width: 24 }} />
-      </View>
-
       {/* 입력 필드들 */}
       <View style={styles.inputSection}>
         <Text style={styles.label}>수입금액</Text>
