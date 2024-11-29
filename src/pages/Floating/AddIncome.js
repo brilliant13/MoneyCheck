@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import DatePicker from '../../components/FloatingTab/DatePicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddIncome = ({ navigation }) => {
   const [amount, setAmount] = useState('');
@@ -19,6 +20,43 @@ const AddIncome = ({ navigation }) => {
 
   const formatDate = (date) => {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+  };
+
+  const handleSave = async () => {
+    try {
+      if (!amount || !source || !selectedCategory) {
+        alert('모든 항목을 입력해주세요.');
+        return;
+      }
+
+      const selectedCategoryInfo = categories.find(
+        (cat) => cat.id === selectedCategory
+      );
+
+      const newIncome = {
+        id: Date.now(),
+        amount: parseInt(amount),
+        source,
+        date: selectedDate,
+        category: {
+          id: selectedCategoryInfo.id,
+          emoji: selectedCategoryInfo.emoji,
+          name: selectedCategoryInfo.name,
+        },
+        createdAt: new Date()
+      };
+
+      const existingData = await AsyncStorage.getItem('incomes');
+      const incomes = existingData ? JSON.parse(existingData) : [];
+      incomes.push(newIncome);
+      await AsyncStorage.setItem('incomes', JSON.stringify(incomes));
+      
+      console.log('저장된 데이터:', newIncome);
+      navigation.goBack();
+    } catch (error) {
+      console.error('저장 실패:', error);
+      alert('저장에 실패했습니다.');
+    }
   };
 
   return (
@@ -98,8 +136,8 @@ const AddIncome = ({ navigation }) => {
       </View>
 
       {/* 저장 버튼 */}
-      <TouchableOpacity style={styles.saveButton}>
-        <Text style={styles.saveButtonText}>영수증 저장하기</Text>
+      <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+        <Text style={styles.saveButtonText}>저장하기</Text>
       </TouchableOpacity>
     </View>
   );
