@@ -202,13 +202,13 @@ const styles = StyleSheet.create({
     color: '#949494',
     fontSize: 14,
     fontFamily: 'Pretendard',
-    top: 585,
+    top: 550,
   },
   captureButtonContainer: {
     position: 'absolute',
     alignItems: 'center',
     width: '100%',
-    top: 650,
+    top: 600,
   },
   captureButton: {
     width: 120,
