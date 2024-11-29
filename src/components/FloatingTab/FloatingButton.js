@@ -1,10 +1,12 @@
 // src/components/FloatingButton.js
 import React, { useState } from 'react';
 import { TouchableOpacity, Image, View, Modal, TouchableWithoutFeedback } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import styles from '../../styles/FloatingTabStyles/FloatingStyles';
 
 const FloatingButton = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const navigation = useNavigation();
 
   const handlePress = () => {
     setIsModalVisible(true);
@@ -29,7 +31,7 @@ const FloatingButton = () => {
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
               <TouchableOpacity onPress={() => {
-                // 수입 추가 로직
+                navigation.navigate('AddIncome');
                 handleModalClose();
               }}>
                 <Image 
