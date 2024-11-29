@@ -13,21 +13,21 @@ const FloatingStackNavigator = () => {
         name="ManualReceipt" 
         component={ManualReceipt}
         options={{
-          header: () => <CustomHeader title="지출 추가하기" />,
+          header: () => <CustomHeader title="지출 추가하기" showBack={true} />,
         }}
       />
       <Stack.Screen 
         name="ReceiptCapture" 
         component={ReceiptCapture}
         options={{
-          header: () => <CustomHeader title="영수증 촬영" />,
+          header: () => <CustomHeader title="영수증 촬영" showBack={true} />,
         }}
       />
       <Stack.Screen 
         name="AddIncome" 
         component={AddIncome}
         options={{
-          header: () => <CustomHeader title="수입 추가하기" />,
+          header: () => <CustomHeader title="수입 추가하기" showBack={true} />,
         }}
       />
     </Stack.Navigator>

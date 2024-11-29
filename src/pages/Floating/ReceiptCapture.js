@@ -68,15 +68,6 @@ const ReceiptCapture = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* 헤더 */}
-      <View style={[styles.header, Platform.OS === 'android' && styles.androidHeader]}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#3A3A3A" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>영수증 촬영</Text>
-        <View style={{ width: 24 }} />
-      </View>
-
       {/* 카메라 프레임 영역 */}
       <View style={styles.cameraFrame}>
         {selectedImage ? (
@@ -169,7 +160,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     position: 'absolute',
-    top: 496,
+    top: 450,
     width: '100%',
   },
   albumButton: {
