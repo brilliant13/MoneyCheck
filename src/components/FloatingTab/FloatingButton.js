@@ -31,7 +31,7 @@ const FloatingButton = () => {
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
               <TouchableOpacity onPress={() => {
-                navigation.navigate('AddIncome');
+                navigation.navigate('FloatingStack', { screen: 'AddIncome' });
                 handleModalClose();
               }}>
                 <Image 
@@ -41,7 +41,7 @@ const FloatingButton = () => {
               </TouchableOpacity>
               
               <TouchableOpacity onPress={() => {
-                // 지출 추가 로직
+                navigation.navigate('FloatingStack', { screen: 'ReceiptCapture' });
                 handleModalClose();
               }}>
                 <Image 
