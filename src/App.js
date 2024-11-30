@@ -16,14 +16,18 @@ import SignUpScreen from './pages/SignUpScreen'; // 회원가입 스크린 추�
 
 
 import GroupDetail from './pages/Group/GroupDetail'; // GroupDetail 추가
+import AddIncome from './pages/Floating/AddIncome'; // AddIncome 추가
+import ReceiptCapture from './pages/Floating/ReceiptCapture'; // ReceiptCapture import 추가
+import ManualReceipt from './pages/Floating/ManualReceipt'; // ManualReceipt import 추가
+import FloatingStackNavigator from './navigation/FloatingStackNavigator';
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />  
+        {/* <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />   */}
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="GroupStack" component={GroupStackNavigator} />
         <Stack.Screen name="GoalScreen" component={GoalScreen} />
@@ -32,7 +36,7 @@ export default function App() {
         <Stack.Screen name="SubscriptionListScreen" component={SubscriptionListScreen} />
         <Stack.Screen name="SubscriptionAddScreen" component={SubscriptionAddScreen} />
         <Stack.Screen name="GoalAddScreen" component={GoalAddScreen} />
-        {/* dd */}
+        <Stack.Screen name="FloatingStack" component={FloatingStackNavigator} />
       </Stack.Navigator> 
     </NavigationContainer>
   );
