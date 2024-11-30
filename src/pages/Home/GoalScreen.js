@@ -19,7 +19,6 @@ const GoalScreen = ({ navigation }) => {
     {
       id: '1',
       title: '맥북',
-      level: 1,
       progress: 50,
       status: '목표를 위해 가는 중',
       image: require('../../assets/macbook.png'),
@@ -27,7 +26,6 @@ const GoalScreen = ({ navigation }) => {
     {
       id: '2',
       title: '애플워치',
-      level: 1,
       progress: 30,
       status: '목표를 위해 가는 중',
       image: require('../../assets/applewatch.png'),
@@ -35,7 +33,6 @@ const GoalScreen = ({ navigation }) => {
     {
       id: '3',
       title: '아이패드',
-      level: 1,
       progress: 87,
       status: '목표를 위해 가는 중',
       image: require('../../assets/ipad.png'),
@@ -43,7 +40,6 @@ const GoalScreen = ({ navigation }) => {
     {
       id: '4',
       title: '아이패드 미니',
-      level: 4,
       progress: 34,
       status: '목표를 위해 가는 중',
       image: require('../../assets/ipad.png'),
