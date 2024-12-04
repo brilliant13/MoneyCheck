@@ -39,6 +39,7 @@ const AccountBook = () => {
 
   return (
     <View style={styles.container}>
+      
       {/* 세부 탭 */}
       <View style={styles.tabContainer}>
         {['전체', '수입', '지출'].map((tab) => (
