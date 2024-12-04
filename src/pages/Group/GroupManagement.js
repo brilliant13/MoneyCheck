@@ -1,5 +1,3 @@
-//공동 관리 탭 화면
-// src/pages/Group/GroupManagement.js
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -19,9 +17,10 @@ const GroupManagement = () => {
           style={styles.image}
         />
 
+        {/* 버튼: QrMatching으로 이동 */}
         <TouchableOpacity 
           style={styles.button} 
-          onPress={() => navigation.navigate('GroupDetail')}
+          onPress={() => navigation.navigate('QrMatching')}
         >
           <View style={styles.buttonContent}>
             <Image 
