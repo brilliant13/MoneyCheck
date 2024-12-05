@@ -12,6 +12,8 @@ import PagerView from 'react-native-pager-view';
 import { useNavigation } from '@react-navigation/native';
 import GoalCard from '../../components/HomeTab/GoalCard';
 import MoneyCard from '../../components/HomeTab/MoneyCard';
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -71,7 +73,34 @@ const HomeScreen = ({ route }) => {
   ]);
 
   const [currentPage, setCurrentPage] = useState(0); // currentPage 상태 추가
+  const [totalIncome, setTotalIncome] = useState(2500000); // 기본 고정 수입
   const navigation = useNavigation();
+
+
+  // useFocusEffect 사용하여 화면에 포커스될 때마다 수입 데이터 로드
+  useFocusEffect(
+    React.useCallback(() => {
+      const loadIncomes = async () => {
+        try {
+          const existingData = await AsyncStorage.getItem('incomes');
+          if (existingData) {
+            const incomes = JSON.parse(existingData);
+            const newTotalIncome = incomes.reduce((total, income) => {
+              return total + income.amount;
+            }, 2500000); // 기존 고정 수입에 새로운 수입 추가
+            
+            setTotalIncome(newTotalIncome);
+          }
+        } catch (error) {
+          console.error('수입 데이터 로드 실패:', error);
+        }
+      };
+
+      loadIncomes();
+    }, [])
+  );
+  
+
 
   // 새로운 목표 추가 처리
   useEffect(() => {
@@ -90,9 +119,13 @@ const HomeScreen = ({ route }) => {
   return (
     <View style={styles.container}>
 
-      {/* MoneyCard 컴포넌트 */}
-      <MoneyCard income="3,333,333" expense="2,222,222" style = {styles.moneyPager}/>
-
+      {/* MoneyCard 컴포넌트에 totalIncome 전달 */}
+      <MoneyCard 
+        income={totalIncome.toString()} 
+        expense="400000" 
+        style={styles.moneyPager}
+      />
+      
 
       {/* 목표 목록 */}
       <Text style={styles.sectionTitle}>목표 목록</Text>
