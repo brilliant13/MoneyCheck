@@ -207,9 +207,11 @@ const styles = StyleSheet.create({
     marginBottom: -5,
     color: '#222',
     marginLeft: screenWidth * 0.05, // pagerView의 왼쪽과 동일한 비율로 설정
+    marginTop: 20,
   },
   moneyPager:{
     alignSelf: 'center',
+    marginTop:10,
 
 
   },
