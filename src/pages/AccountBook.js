@@ -9,6 +9,7 @@ import ExpenseList from '../components/AccountBookTab/ExpenseList';
 import TotalExpense from '../components/AccountBookTab/TotalExpense';
 import Income from '../components/AccountBookTab/Income';
 import Expense from '../components/AccountBookTab/Expense';
+import MoneyCard from '../components/HomeTab/MoneyCard';
 import styles from '../styles/AccountBookTabStyles/AccountBookStyles';
 
 const AccountBook = () => {
@@ -29,8 +30,8 @@ const AccountBook = () => {
     }
   };
 
-   // 랜덤 소비액 생성 (예시 데이터)
-   const randomMonthlyExpense = (month) => {
+  // 랜덤 소비액 생성 (예시 데이터)
+  const randomMonthlyExpense = (month) => {
     // 월에 따라 랜덤 소비액 생성
     const randomExpense = Math.floor(Math.random() * 500000 + 100000); // 10만 ~ 50만 사이
     setMonthlyExpense(randomExpense);
@@ -39,6 +40,7 @@ const AccountBook = () => {
 
   return (
     <View style={styles.container}>
+
       {/* 세부 탭 */}
       <View style={styles.tabContainer}>
         {['전체', '수입', '지출'].map((tab) => (
@@ -55,27 +57,36 @@ const AccountBook = () => {
       </View>
 
       {/* 탭에 따른 콘텐츠 렌더링 */}
-      <ScrollView>
-        {selectedTab === '전체' && (
-          <>
-            {/* Calendar에서 클릭 이벤트 핸들러 전달 */}
-            {/* <Calendar onDateClick={handleDateClick} /> */}
-             {/* Calendar에 onMonthSelect 전달 */}
-        
-        <Calendar onDateClick={handleDateClick} onMonthSelect={(month) => randomMonthlyExpense(month)} />
 
-            {/* TotalExpense, Income, Expense 분리된 컴포넌트 호출 */}
-            {/* <TotalExpense month="11월" expense={monthlyExpense} /> */}
-            <TotalExpense month={selectedMonth} expense={monthlyExpense} />
-            <View style={styles.summaryContainer}>
-              <Income income={dailyData.income} />
-              <Expense expense={dailyData.expense} />
-            </View>
-          </>
-        )}
-        {selectedTab === '수입' && <IncomeList />}
-        {selectedTab === '지출' && <ExpenseList />}
-      </ScrollView>
+      {selectedTab === '전체' && (
+        <>
+          {/* Calendar에서 클릭 이벤트 핸들러 전달 */}
+          {/* <Calendar onDateClick={handleDateClick} /> */}
+          {/* Calendar에 onMonthSelect 전달 */}
+
+
+           
+            <Calendar onDateClick={handleDateClick} onMonthSelect={(month) => randomMonthlyExpense(month)} />
+           
+          {/* TotalExpense, Income, Expense 분리된 컴포넌트 호출 */}
+          {/* <TotalExpense month="11월" expense={monthlyExpense} /> */}
+
+
+          <View style={styles.MonthsummaryContainer}>
+          <TotalExpense month={selectedMonth} expense={monthlyExpense} />
+</View>
+
+
+          <View style={styles.summaryContainer}>
+            <MoneyCard income="3,333,333" expense="2,222,222" style={styles.moneyPager} />
+            {/* <Income income={dailyData.income} /> */}
+            {/* <Expense expense={dailyData.expense} /> */}
+          </View>
+        </>
+      )}
+      {selectedTab === '수입' && <IncomeList />}
+      {selectedTab === '지출' && <ExpenseList />}
+
 
     </View>
   );
