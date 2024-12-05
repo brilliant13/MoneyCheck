@@ -75,7 +75,7 @@ const YearMonthPicker = ({
               style={styles.picker}
               onValueChange={(itemValue) => setTempYear(itemValue)}
             >
-              {Array.from({ length: 10 }, (_, i) => (
+              {Array.from({ length: 5 }, (_, i) => (
                 <Picker.Item
                   key={i}
                   label={`${2020 + i}년`}

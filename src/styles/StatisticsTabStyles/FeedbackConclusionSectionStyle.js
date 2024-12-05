@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   section: {
     marginVertical: 10,
     paddingHorizontal: 24,
-    marginBottom: 180,
+    marginBottom: 160, // 추가된 marginBottom 포함
   },
   sectionTitle: {
     fontSize: 18,

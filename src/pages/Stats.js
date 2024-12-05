@@ -1,16 +1,13 @@
-//통계 탭 화면
-// src/pages/Statistics.js
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import YearMonthPicker from "../components/StatisticsTab/YearMonthPicker";
 import ExpenseBarChart from "../components/StatisticsTab/ExpenseBarChart";
 import EmotionStatistics from "../components/StatisticsTab/EmotionStatistics";
-import FeedbackSection from "../components/StatisticsTab/FeedbackSection";
-import ConclusionSection from "../components/StatisticsTab/ConclusionSection";
+import FeedbackConclusionSection from "../components/StatisticsTab/FeedbackConclusionSection";
 
 const Statistics = () => {
   const [selectedYear, setSelectedYear] = useState(2024); // 기본 연도
-  const [selectedMonthIndex, setSelectedMonthIndex] = useState(10); // 기본 월 (11월)
+  const [selectedMonthIndex, setSelectedMonthIndex] = useState(11); // 기본 월 (12월)
 
   // 새로운 랜덤 데이터를 생성하는 함수
   const generateRandomData = () => {
@@ -54,17 +51,14 @@ const Statistics = () => {
       {/* 데이터 시각화 */}
       <ExpenseBarChart expenseData={expenseData} />
 
-      {/* 구분선 */}
-      <View style={styles.divider} />
-
       {/* 감정 통계 섹션 */}
       <EmotionStatistics />
 
-      {/* 피드백 섹션 */}
-      <FeedbackSection />
-
-      {/* 결론 섹션 */}
-      <ConclusionSection />
+      {/* 피드백 및 결론 섹션 */}
+      <FeedbackConclusionSection
+        selectedYear={selectedYear}
+        selectedMonthIndex={selectedMonthIndex}
+      />
     </ScrollView>
   );
 };
