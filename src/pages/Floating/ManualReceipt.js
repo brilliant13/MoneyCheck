@@ -5,11 +5,13 @@ import DatePicker from '../../components/FloatingTab/DatePicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ManualReceipt = ({ navigation, route }) => {
-  const [businessNumber, setBusinessNumber] = useState('');
-  const [representative, setRepresentative] = useState('');
-  const [storeName, setStoreName] = useState('');
-  const [amount, setAmount] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const ocrData = route.params?.ocrData || {};
+  
+  const [businessNumber, setBusinessNumber] = useState(ocrData.businessNumber || '');
+  const [representative, setRepresentative] = useState(ocrData.representative || '');
+  const [storeName, setStoreName] = useState(ocrData.storeName || '');
+  const [amount, setAmount] = useState(ocrData.amount?.toString() || '');
+  const [selectedDate, setSelectedDate] = useState(ocrData.date ? new Date(ocrData.date) : new Date());
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedMood, setSelectedMood] = useState(null);
 
@@ -17,6 +19,12 @@ const ManualReceipt = ({ navigation, route }) => {
 
   const formatDate = (date) => {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+  };
+
+  const handleAmountChange = (text) => {
+    const numericValue = text.replace(/[^0-9]/g, '');
+    const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    setAmount(formattedValue);
   };
 
   const handleSave = async () => {
@@ -87,8 +95,9 @@ const ManualReceipt = ({ navigation, route }) => {
           style={styles.input}
           placeholder="금액을 입력해 주세요"
           value={amount}
-          onChangeText={setAmount}
+          onChangeText={handleAmountChange}
           keyboardType="numeric"
+          placeholderTextColor="#949494"
         />
 
         <Text style={styles.label}>발행일</Text>

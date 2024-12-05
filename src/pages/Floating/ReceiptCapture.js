@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform, StatusBar, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform, StatusBar, Image, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera, CameraType } from 'expo-camera';
+import { processReceiptImage } from '../../utils/ocr';
 
 const ReceiptCapture = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -10,6 +11,7 @@ const ReceiptCapture = ({ navigation }) => {
   const [cameraReady, setCameraReady] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(false);
   const cameraRef = useRef(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -17,6 +19,25 @@ const ReceiptCapture = ({ navigation }) => {
       setHasPermission(status === 'granted');
     })();
   }, []);
+
+  const handleImageProcess = async (imageUri) => {
+    setIsProcessing(true);
+    try {
+      const ocrResult = await processReceiptImage(imageUri);
+      navigation.navigate('ManualReceipt', {
+        ocrData: ocrResult,
+        previousScreen: navigation.getState().routes[0].name
+      });
+    } catch (error) {
+      console.error('OCR 처리 오류:', error);
+      alert('영수증 인식에 실패했습니다. 수동으로 입력해주세요.');
+      navigation.navigate('ManualReceipt', {
+        previousScreen: navigation.getState().routes[0].name
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   const takePicture = async () => {
     if (!isCameraOn) {
@@ -29,6 +50,7 @@ const ReceiptCapture = ({ navigation }) => {
         const photo = await cameraRef.current.takePictureAsync();
         setSelectedImage(photo.uri);
         setIsCameraOn(false);
+        await handleImageProcess(photo.uri);
       } catch (error) {
         console.error('Error taking picture:', error);
       }
@@ -56,6 +78,7 @@ const ReceiptCapture = ({ navigation }) => {
 
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
+      await handleImageProcess(result.assets[0].uri);
     }
   };
 
@@ -116,6 +139,16 @@ const ReceiptCapture = ({ navigation }) => {
           {isCameraOn ? '촬영하기' : '카메라 켜기'}
         </Text>
       </View>
+
+      {isProcessing && (
+        <View style={styles.loadingOverlay}>
+          <View style={styles.loadingBox}>
+            <ActivityIndicator size="large" color="#00AB96" />
+            <Text style={styles.loadingText}>영수증을 분석중입니다...</Text>
+            <Text style={styles.loadingSubText}>잠시만 기다려주세요</Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -230,6 +263,37 @@ const styles = StyleSheet.create({
   selectedImage: {
     width: '100%',
     height: '100%',
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  },
+  loadingBox: {
+    backgroundColor: 'white',
+    padding: 24,
+    borderRadius: 16,
+    alignItems: 'center',
+    width: '80%',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#222222',
+    fontFamily: 'Pretendard',
+  },
+  loadingSubText: {
+    marginTop: 8,
+    fontSize: 14,
+    color: '#666666',
+    fontFamily: 'Pretendard',
   },
 });
 
