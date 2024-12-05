@@ -47,17 +47,21 @@ const Calendar = ({ onDateClick }) => {
   };
 
   return (
+
     <View style={styles.container}>
       
       <View style={styles.headerContainer}>
+
         <HeaderWithModal
           selectedYear={selectedYear}
           selectedMonth={selectedMonthIndex + 1}
           onMonthSelect={handleMonthChange}
         />
+
         <TouchableOpacity style={styles.todayButton} onPress={handleTodayPress}>
           <Text style={styles.todayText}>오늘</Text>
         </TouchableOpacity>
+        
       </View>
 
       <View style={styles.calendarContainer}>
@@ -76,6 +80,7 @@ const Calendar = ({ onDateClick }) => {
           const isSelected = day === selectedDay;
 
           return (
+            
             <TouchableOpacity
               key={index}
               style={styles.dateContainer}
@@ -92,10 +97,12 @@ const Calendar = ({ onDateClick }) => {
                 {day || ''}
               </Text>
             </TouchableOpacity>
+
           );
         })}
       </View>
     </View>
+
   );
 };
 
