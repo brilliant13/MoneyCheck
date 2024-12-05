@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const SubscriptionItem = ({ icon, title, nextPayment, monthlyFee }) => {
+const SubscriptionItem = ({ icon, title, nextPayment,nextPayDay, monthlyFee }) => {
   return (
     <View style={styles.card}>
       <View style={styles.topContainer}>
@@ -9,7 +9,7 @@ const SubscriptionItem = ({ icon, title, nextPayment, monthlyFee }) => {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
         </View>
-        <Text style={styles.paymentCycle}>매달 15일 결제</Text>
+        <Text style={styles.paymentCycle}>매달 {nextPayDay} 결제</Text>
       </View>
       <View style={styles.divider} />
       <View style={styles.bottomContainer}>
