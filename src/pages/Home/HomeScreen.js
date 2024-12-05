@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
 
   },
   pagerView: {
-    height: 220,
+    height: 260,
     marginBottom: 5,
     width: screenWidth * 0.9,
     alignSelf: 'center',
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: screenWidth * 0.9,
     alignSelf: 'center',
-    height: 230,
+    height: 280,
   },
   indicatorContainer: {
     flexDirection: 'row',

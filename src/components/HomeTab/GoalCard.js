@@ -60,11 +60,13 @@ const GoalCard = ({ title, progress, status, image }) => {
             level === 2 && styles.treeLevel2, // level2일 때만 스타일 추가
           ]}
         />
-        <Text style={styles.status}>{status}</Text>
+        
       </View>
+      <Text style={styles.status}>{status}</Text>
 
       {/* 진행 상태 바 */}
       <View style={styles.progressBarWrapper}>
+        
         <View style={styles.progressBarContainer}>
           <Progress.Bar
             progress={progress / 100}
@@ -101,6 +103,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 16,
     width: screenWidth * 0.89,
+    height: 250,
     alignSelf: 'center',
     borderWidth: 1,
     borderColor: '#E0E0E0',
@@ -151,12 +154,20 @@ const styles = StyleSheet.create({
   status: {
     fontSize: 14,
     color: '#666',
-    marginTop: 8,
+    position: 'absolute', // 절대 위치로 고정
+    bottom: 60, // 프로세스 바 바로 위에 위치하도록 조정
+    left: 0, // 부모 뷰의 왼쪽으로부터 0
+    right: 0, // 부모 뷰의 오른쪽으로부터 0
+    textAlign: 'center', // 텍스트를 가운데 정렬
   },
+  
   progressBarWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 12,
+    position: 'absolute', // 절대 위치로 고정
+    bottom: 40, // 카드 하단에서 30만큼 띄움
+    left: 0,
+    right: 0,
+    paddingLeft : 20, // 좌우 여백 추가
+    justifyContent: 'center', // 가운데 정렬
   },
   progressBarContainer: {
     position: 'relative',
@@ -174,7 +185,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     bottom: 0,
-    marginRight: 12,
+    marginRight: 25,
   },
 });
 
