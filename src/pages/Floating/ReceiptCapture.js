@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Camera, CameraType } from 'expo-camera';
 import { processReceiptImage } from '../../utils/ocr';
 
-const ReceiptCapture = ({ navigation }) => {
+const ReceiptCapture = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [cameraReady, setCameraReady] = useState(false);
@@ -26,13 +26,13 @@ const ReceiptCapture = ({ navigation }) => {
       const ocrResult = await processReceiptImage(imageUri);
       navigation.navigate('ManualReceipt', {
         ocrData: ocrResult,
-        previousScreen: navigation.getState().routes[0].name
+        previousScreen: route.params?.previousScreen || 'AccountBook'
       });
     } catch (error) {
       console.error('OCR 처리 오류:', error);
       alert('영수증 인식에 실패했습니다. 수동으로 입력해주세요.');
       navigation.navigate('ManualReceipt', {
-        previousScreen: navigation.getState().routes[0].name
+        previousScreen: route.params?.previousScreen || 'AccountBook'
       });
     } finally {
       setIsProcessing(false);
@@ -118,7 +118,7 @@ const ReceiptCapture = ({ navigation }) => {
         <TouchableOpacity 
           style={styles.manualButton} 
           onPress={() => navigation.navigate('ManualReceipt', {
-            previousScreen: navigation.getState().routes[0].name
+            previousScreen: route.params?.previousScreen || 'AccountBook'
           })}
         >
           <Text style={styles.manualButtonText}>수기입력</Text>

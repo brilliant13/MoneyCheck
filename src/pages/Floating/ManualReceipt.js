@@ -8,12 +8,21 @@ const ManualReceipt = ({ navigation, route }) => {
   const ocrData = route.params?.ocrData || {};
   
   const [businessNumber, setBusinessNumber] = useState(ocrData.businessNumber || '');
-  const [representative, setRepresentative] = useState(ocrData.representative || '');
   const [storeName, setStoreName] = useState(ocrData.storeName || '');
   const [amount, setAmount] = useState(ocrData.amount?.toString() || '');
+  const [paymentMethod, setPaymentMethod] = useState(ocrData.paymentMethod || '신용카드');
   const [selectedDate, setSelectedDate] = useState(ocrData.date ? new Date(ocrData.date) : new Date());
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedMood, setSelectedMood] = useState(null);
+
+  const paymentMethods = [
+    '신용카드', 
+    '체크카드', 
+    '현금', 
+    '계좌이체',
+    '간편결제',
+    '기타'
+  ];
 
   const moods = ['🤩', '😊', '😑', '🥲', '😭'];
 
@@ -29,17 +38,17 @@ const ManualReceipt = ({ navigation, route }) => {
 
   const handleSave = async () => {
     try {
-      if (!storeName || !amount || !selectedDate) {
-        alert('상호, 금액, 발행일은 필수 입력 항목입니다.');
+      if (!storeName || !amount || !selectedDate || !paymentMethod) {
+        alert('상호, 금액, 발행일, 결제수단은 필수 입력 항목입니다.');
         return;
       }
 
       const newReceipt = {
         id: Date.now(),
         businessNumber,
-        representative,
         storeName,
-        amount: parseInt(amount),
+        amount: parseInt(amount.replace(/,/g, '')),
+        paymentMethod,
         date: selectedDate,
         mood: selectedMood !== null ? moods[selectedMood] : null,
         createdAt: new Date()
@@ -52,8 +61,8 @@ const ManualReceipt = ({ navigation, route }) => {
       
       alert('영수증이 저장되었습니다.');
       
-      const previousScreen = route.params?.previousScreen || 'AccountBook';
-      navigation.navigate(previousScreen);
+      navigation.goBack();
+      navigation.goBack();
     } catch (error) {
       console.error('저장 실패:', error);
       alert('저장에 실패했습니다.');
@@ -74,14 +83,6 @@ const ManualReceipt = ({ navigation, route }) => {
           placeholderTextColor="#949494"
         />
 
-        <Text style={styles.label}>대표자</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="대표자를 입력해 주세요"
-          value={representative}
-          onChangeText={setRepresentative}
-        />
-
         <Text style={styles.label}>상호</Text>
         <TextInput
           style={styles.input}
@@ -99,6 +100,27 @@ const ManualReceipt = ({ navigation, route }) => {
           keyboardType="numeric"
           placeholderTextColor="#949494"
         />
+
+        <Text style={styles.label}>결제수단</Text>
+        <View style={styles.paymentMethodContainer}>
+          {paymentMethods.map((method) => (
+            <TouchableOpacity
+              key={method}
+              style={[
+                styles.paymentMethodButton,
+                paymentMethod === method && styles.selectedPaymentMethod
+              ]}
+              onPress={() => setPaymentMethod(method)}
+            >
+              <Text style={[
+                styles.paymentMethodText,
+                paymentMethod === method && styles.selectedPaymentMethodText
+              ]}>
+                {method}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
 
         <Text style={styles.label}>발행일</Text>
         <TouchableOpacity 
@@ -235,6 +257,33 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Pretendard',
     fontWeight: '600',
+  },
+  paymentMethodContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 8,
+    marginBottom: 20,
+  },
+  paymentMethodButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E8E8E8',
+    backgroundColor: '#FFFFFF',
+  },
+  selectedPaymentMethod: {
+    backgroundColor: '#00B9A5',
+    borderColor: '#00B9A5',
+  },
+  paymentMethodText: {
+    color: '#666666',
+    fontSize: 14,
+    fontFamily: 'Pretendard',
+  },
+  selectedPaymentMethodText: {
+    color: '#FFFFFF',
   },
 });
 

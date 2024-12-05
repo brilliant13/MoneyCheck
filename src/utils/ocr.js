@@ -44,16 +44,25 @@ const performOCR = async (imageUri) => {
     const data = await response.json();
     console.log('OCR Response:', JSON.stringify(data, null, 2));
     
-    // API 응답에서 필요한 정보 추출
+    // 카드 종류 판별 함수
+    const determineCardType = (ccCode) => {
+      if (!ccCode) return null;
+      const cardName = ccCode.toLowerCase();
+      if (cardName.includes('체크')) return '체크카드';
+      if (cardName.includes('신용')) return '신용카드';
+      return '카드';
+    };
+
     const extractedData = {
-      storeName: data.fields.find(f => f.key === 'store.store_name')?.refinedValue || '',
-      amount: data.fields.find(f => f.key === 'total.charged_price' && f.type === 'content')?.refinedValue?.replace(/[^0-9]/g, '') || '',
+      storeName: data.fields.find(f => f.key === 'store.store_name' && f.type === 'content')?.refinedValue || '',
+      amount: data.fields.find(f => f.key === 'total.card_payment_price' && f.type === 'content')?.refinedValue?.replace(/[^0-9]/g, '') || '',
       businessNumber: data.fields.find(f => f.key === 'store.store_registration_number')?.refinedValue || '',
-      representative: data.fields.find(f => f.key === 'store.representative')?.refinedValue || '',
-      // 거래일자 추출 시도
+      paymentMethod: (() => {
+        const ccCode = data.fields.find(f => f.key === 'transaction.cc_code' && f.type === 'content')?.refinedValue;
+        return ccCode ? determineCardType(ccCode) : '현금';
+      })(),
       date: (() => {
         const transactionDate = data.fields.find(f => f.key === 'transaction.transaction_date');
-        // confidence가 낮거나 인식 실패시 현재 날짜 사용
         if (!transactionDate || transactionDate.confidence < 0.5) {
           console.log('거래일자 인식 실패, 현재 날짜 사용');
           return new Date();
