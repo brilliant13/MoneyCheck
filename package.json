@@ -19,7 +19,7 @@
     "@react-navigation/stack": "^7.0.5",
     "expo": "~52.0.6",
     "expo-barcode-scanner": "^13.0.1",
-    "expo-camera": "~16.0.9",
+    "expo-camera": "^16.0.9",
     "expo-image-picker": "^16.0.3",
     "expo-status-bar": "~2.0.0",
     "firebase": "^11.0.2",
@@ -43,7 +43,8 @@
     "react-native-web": "~0.19.13"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@react-native-community/cli": "latest"
   },
   "private": true
 }
