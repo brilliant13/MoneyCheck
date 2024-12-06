@@ -1,6 +1,11 @@
+// src/pages/Floating/ManualReceipt.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform, StatusBar } from 'react-native';
+
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform, StatusBar, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
 import DropDownPicker from 'react-native-dropdown-picker';
+
 import DatePicker from '../../components/FloatingTab/DatePicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,6 +19,13 @@ const ManualReceipt = ({ navigation, route }) => {
   const [selectedDate, setSelectedDate] = useState(ocrData.date ? new Date(ocrData.date) : new Date());
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedMood, setSelectedMood] = useState(null);
+
+
+
+
+  
+
+
 
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState(null);
@@ -35,7 +47,16 @@ const ManualReceipt = ({ navigation, route }) => {
     '기타'
   ];
 
+
   const moods = ['🤩', '😊', '😑', '🥲', '😭'];
+
+  const categories = [
+    { id: 1, emoji: '💰', name: '월급', icon: require('../../assets/wage.png') },
+    { id: 2, emoji: '💸', name: '용돈', icon: require('../../assets/money.png') },
+    { id: 3, emoji: '📈', name: '투자', icon: require('../../assets/etc.png') },
+    { id: 4, emoji: '📝', name: '기타', icon: require('../../assets/etc.png') },
+  ];
+
 
   const formatDate = (date) => {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
@@ -56,12 +77,23 @@ const ManualReceipt = ({ navigation, route }) => {
 
       const newReceipt = {
         id: Date.now(),
+        name: categories.find((cat) => cat.id === selectedCategory).name,
+        date: `${selectedDate.getMonth() + 1}.${selectedDate.getDate()}`,
+        amount: `- ${parseInt(amount).toLocaleString()}원`,
+        icon: categories.find((cat) => cat.id === selectedCategory).icon,
+
+
         businessNumber,
         storeName,
+
+        
+        
+
         amount: parseInt(amount.replace(/,/g, '')),
         paymentMethod,
         category,
         date: selectedDate,
+
         mood: selectedMood !== null ? moods[selectedMood] : null,
         createdAt: new Date()
       };
@@ -70,11 +102,21 @@ const ManualReceipt = ({ navigation, route }) => {
       const receipts = existingData ? JSON.parse(existingData) : [];
       receipts.push(newReceipt);
       await AsyncStorage.setItem('receipts', JSON.stringify(receipts));
+
+
+      // alert('영수증이 저장되었습니다.');
+      console.log('저장된 데이터:', receipts); // 저장된 데이터 출력
+      //alert('지출이 저장되었습니다.');
+
+      //const previousScreen = route.params?.previousScreen || 'AccountBook';
+      //navigation.navigate(previousScreen);
+
       
       alert('영수증이 저장되었습니다.');
       
       navigation.goBack();
       navigation.goBack();
+
     } catch (error) {
       console.error('저장 실패:', error);
       alert('저장에 실패했습니다.');
@@ -82,7 +124,8 @@ const ManualReceipt = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container}>       
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
       {/* 입력 필드들 */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>사업자 번호</Text>
@@ -189,8 +232,11 @@ const ManualReceipt = ({ navigation, route }) => {
               <Text style={styles.moodEmoji}>{mood}</Text>
             </TouchableOpacity>
           ))}
+
         </View>
-      </View>
+        {/* 공백 추가 */}
+        <View style={styles.bottomSpacing} />
+      </ScrollView>
 
       {/* 저장 버튼 */}
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
@@ -201,6 +247,89 @@ const ManualReceipt = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  // categorySection: {
+  //   marginTop: 16,
+  //   marginBottom: 16,
+  // },
+  // horizontalCategoryContainer: {
+  //   flexDirection: 'row',
+  //   flexWrap: 'wrap', // 필요한 경우 다음 줄로 넘기기
+  //   gap: 8, // 항목 간의 간격
+  // },
+  // categoryItem: {
+  //   width: 70,
+  //   height: 70,
+  //   backgroundColor: '#F2F2F2',
+  //   borderRadius: 6,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   marginHorizontal: 8, // 양옆 여백
+  //   marginBottom: 10, // 세로 여백
+  // },
+  // selectedCategory: {
+  //   backgroundColor: '#73E0D6',
+  //   borderWidth: 1,
+  //   borderColor: 'rgba(0, 0, 0, 0.10)',
+  // },
+  // categoryEmoji: {
+  //   fontSize: 26,
+  //   color: '#6C6C6C',
+  //   fontFamily: 'Pretendard',
+  //   fontWeight: '500',
+  // },
+  // categoryName: {
+  //   fontSize: 12,
+  //   color: '#6C6C6C',
+  //   fontFamily: 'Pretendard',
+  //   fontWeight: '400',
+  //   marginTop: 6, // 이모지와 텍스트 간의 간격
+  //   textAlign: 'center',
+  // },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingBottom: 50, // 여유 공간 추가
+  },
+  bottomSpacing: {
+    height: 150, // "저장하기" 버튼과 카테고리 사이 공백 추가
+  },
+  categorySection: {
+    marginTop: 16,
+    marginBottom: 16,
+  },
+  horizontalCategoryContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8, // 아이템 간 간격
+  },
+  categoryItem: {
+    width: 60, // 크기 조정
+    height: 60,
+    backgroundColor: '#F2F2F2',
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8, // 아이템 간 간격 조정
+  },
+  selectedCategory: {
+    backgroundColor: '#73E0D6',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.10)',
+  },
+  categoryEmoji: {
+    fontSize: 24,
+    color: '#6C6C6C',
+    fontFamily: 'Pretendard',
+    fontWeight: '500',
+  },
+  categoryName: {
+    fontSize: 10, // 텍스트 크기 조정
+    color: '#6C6C6C',
+    fontFamily: 'Pretendard',
+    fontWeight: '400',
+    marginTop: 4,
+    textAlign: 'center',
+  },
+
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',

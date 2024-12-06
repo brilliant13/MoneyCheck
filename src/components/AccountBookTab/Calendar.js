@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../../styles/AccountBookTabStyles/CalendarStyles';
 import HeaderWithModal from './HeaderWithModal';
 
-const Calendar = ({ onDateClick }) => {
+const Calendar = ({ onDateClick,onMonthChange }) => {
   const [selectedMonthIndex, setSelectedMonthIndex] = useState(new Date().getMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedDay, setSelectedDay] = useState(null);
@@ -36,6 +36,9 @@ const Calendar = ({ onDateClick }) => {
   const handleMonthChange = ({ year, month }) => {
     setSelectedYear(year);
     setSelectedMonthIndex(month - 1);
+    if (onMonthChange) {
+      onMonthChange(year, month);
+    }
   };
 
   const handleTodayPress = () => {
