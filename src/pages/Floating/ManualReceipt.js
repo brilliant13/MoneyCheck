@@ -43,11 +43,17 @@ const ManualReceipt = ({ navigation, route }) => {
 
       const newReceipt = {
         id: Date.now(),
+        name: categories.find((cat) => cat.id === selectedCategory).name,
+        date: `${selectedDate.getMonth() + 1}.${selectedDate.getDate()}`,
+        amount: `- ${parseInt(amount).toLocaleString()}원`,
+        icon: categories.find((cat) => cat.id === selectedCategory).icon,
+
+
         businessNumber,
         representative,
         storeName,
         amount: parseInt(amount),
-        date: selectedDate,
+        // date: selectedDate,
         mood: selectedMood !== null ? moods[selectedMood] : null,
         createdAt: new Date()
       };
@@ -57,7 +63,9 @@ const ManualReceipt = ({ navigation, route }) => {
       receipts.push(newReceipt);
       await AsyncStorage.setItem('receipts', JSON.stringify(receipts));
 
-      alert('영수증이 저장되었습니다.');
+      // alert('영수증이 저장되었습니다.');
+      console.log('저장된 데이터:', receipts); // 저장된 데이터 출력
+      alert('지출이 저장되었습니다.');
 
       const previousScreen = route.params?.previousScreen || 'AccountBook';
       navigation.navigate(previousScreen);
@@ -180,8 +188,8 @@ const ManualReceipt = ({ navigation, route }) => {
             </View>
           </View>
         </View>
-         {/* 공백 추가 */}
-    <View style={styles.bottomSpacing} />
+        {/* 공백 추가 */}
+        <View style={styles.bottomSpacing} />
       </ScrollView>
 
       {/* 저장 버튼 */}
@@ -275,7 +283,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     textAlign: 'center',
   },
-  
+
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
