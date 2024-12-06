@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform, StatusBar } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from '../../components/FloatingTab/DatePicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -15,12 +15,23 @@ const ManualReceipt = ({ navigation, route }) => {
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedMood, setSelectedMood] = useState(null);
 
+  const [open, setOpen] = useState(false);
+  const [category, setCategory] = useState(null);
+  const [categories] = useState([
+    { label: '식비', value: 'food' },
+    { label: '주거비', value: 'housing' },
+    { label: '교통비', value: 'transportation' },
+    { label: '의료/건강', value: 'medical' },
+    { label: '쇼핑', value: 'shopping' },
+    { label: '문화/여가', value: 'culture' },
+    { label: '반려동물', value: 'pet' },
+    { label: '기타', value: 'etc' }
+  ]);
+
   const paymentMethods = [
     '신용카드', 
     '체크카드', 
     '현금', 
-    '계좌이체',
-    '간편결제',
     '기타'
   ];
 
@@ -38,8 +49,8 @@ const ManualReceipt = ({ navigation, route }) => {
 
   const handleSave = async () => {
     try {
-      if (!storeName || !amount || !selectedDate || !paymentMethod) {
-        alert('상호, 금액, 발행일, 결제수단은 필수 입력 항목입니다.');
+      if (!storeName || !amount || !selectedDate || !paymentMethod || !category) {
+        alert('상호, 금액, 발행일, 결제수단, 카테고리는 필수 입력 항목입니다.');
         return;
       }
 
@@ -49,6 +60,7 @@ const ManualReceipt = ({ navigation, route }) => {
         storeName,
         amount: parseInt(amount.replace(/,/g, '')),
         paymentMethod,
+        category,
         date: selectedDate,
         mood: selectedMood !== null ? moods[selectedMood] : null,
         createdAt: new Date()
@@ -139,6 +151,28 @@ const ManualReceipt = ({ navigation, route }) => {
           onClose={() => setDatePickerVisible(false)}
           onSelect={setSelectedDate}
           selectedDate={selectedDate}
+        />
+
+      <Text style={styles.label}>카테고리</Text>
+        <DropDownPicker
+          open={open}
+          value={category}
+          items={categories}
+          setOpen={setOpen}
+          setValue={setCategory}
+          style={styles.dropdown}
+          dropDownContainerStyle={styles.dropdownContainer}
+          placeholderStyle={styles.dropdownPlaceholder}
+          textStyle={styles.dropdownText}
+          placeholder="카테고리를 선택해주세요"
+          zIndex={3000}
+          zIndexInverse={1000}
+          position="auto"
+          listMode="SCROLLVIEW"
+          autoScroll={true}
+          maxHeight={200}
+          bottomOffset={100}
+          dropDownDirection="AUTO"
         />
 
         <Text style={styles.label}>오늘 기분 어떠세요?</Text>
@@ -285,6 +319,29 @@ const styles = StyleSheet.create({
   selectedPaymentMethodText: {
     color: '#FFFFFF',
   },
+  dropdown: {
+    backgroundColor: '#F9F9F9',
+    borderWidth: 1,
+    borderColor: '#E8E8E8',
+    borderRadius: 6,
+    marginBottom: 20,
+  },
+  dropdownContainer: {
+    backgroundColor: '#F9F9F9',
+    borderWidth: 1,
+    borderColor: '#E8E8E8',
+    borderRadius: 6,
+  },
+  dropdownText: {
+    fontSize: 14,
+    fontFamily: 'Pretendard',
+    color: '#222222',
+  },
+  dropdownPlaceholder: {
+    color: '#949494',
+    fontSize: 14,
+    fontFamily: 'Pretendard',
+  }
 });
 
 export default ManualReceipt; 

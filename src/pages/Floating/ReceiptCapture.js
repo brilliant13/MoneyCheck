@@ -1,26 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform, StatusBar, Image, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform, StatusBar, Image, ActivityIndicator, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera, CameraType } from 'expo-camera';
 import { processReceiptImage } from '../../utils/ocr';
 
 const ReceiptCapture = ({ navigation, route }) => {
-  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraPermission, setCameraPermission] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [cameraReady, setCameraReady] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(false);
   const cameraRef = useRef(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
-    (async () => {
+    const requestCameraPermission = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
+      setCameraPermission(status === 'granted');
+      if (status !== 'granted') {
+        Alert.alert(
+          "카메라 권한 필요",
+          "앱 설정에서 카메라 권한을 활성화해주세요.",
+          [{ text: "확인", onPress: () => {} }]
+        );
+      }
+    };
+
+    requestCameraPermission();
   }, []);
 
-  const handleImageProcess = async (imageUri) => {
+  const processImage = async (imageUri) => {
     setIsProcessing(true);
     try {
       const ocrResult = await processReceiptImage(imageUri);
@@ -29,8 +37,7 @@ const ReceiptCapture = ({ navigation, route }) => {
         previousScreen: route.params?.previousScreen || 'AccountBook'
       });
     } catch (error) {
-      console.error('OCR 처리 오류:', error);
-      alert('영수증 인식에 실패했습니다. 수동으로 입력해주세요.');
+      Alert.alert("처리 실패", "이미지 처리 중 문제가 발생했습니다.");
       navigation.navigate('ManualReceipt', {
         previousScreen: route.params?.previousScreen || 'AccountBook'
       });
@@ -45,20 +52,16 @@ const ReceiptCapture = ({ navigation, route }) => {
       return;
     }
 
-    if (cameraRef.current && cameraReady) {
+    if (cameraRef.current) {
       try {
         const photo = await cameraRef.current.takePictureAsync();
         setSelectedImage(photo.uri);
         setIsCameraOn(false);
-        await handleImageProcess(photo.uri);
+        await processImage(photo.uri);
       } catch (error) {
-        console.error('Error taking picture:', error);
+        Alert.alert("촬영 오류", "사진 촬영 중 문제가 발생했습니다.");
       }
     }
-  };
-
-  const onCameraReady = () => {
-    setCameraReady(true);
   };
 
   const pickImage = async () => {
@@ -78,15 +81,26 @@ const ReceiptCapture = ({ navigation, route }) => {
 
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
-      await handleImageProcess(result.assets[0].uri);
+      await processImage(result.assets[0].uri);
     }
   };
 
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>카메라 접근 권한이 필요합니다.</Text>;
+  if (!cameraPermission) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.permissionText}>
+          카메라 권한이 필요합니다.
+        </Text>
+        <TouchableOpacity 
+          style={styles.permissionButton} 
+          onPress={() => {} }
+        >
+          <Text style={styles.permissionButtonText}>
+            권한 요청하기
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
 
   return (
@@ -95,15 +109,23 @@ const ReceiptCapture = ({ navigation, route }) => {
       <View style={styles.cameraFrame}>
         {selectedImage ? (
           <Image source={{ uri: selectedImage }} style={styles.selectedImage} />
-        ) : isCameraOn && hasPermission ? (
-          <Camera 
-            style={styles.camera} 
+        ) : isCameraOn ? (
+          <Camera
+            style={styles.camera}
+            type={Camera.Constants.Type.back}
             ref={cameraRef}
-            type={CameraType.back}
-            onCameraReady={onCameraReady}
-          />
+            onMountError={(error) => {
+              console.error('카메라 마운트 오류:', error);
+              Alert.alert('오류', '카메라를 시작할 수 없습니다.');
+            }}
+          >
+            <View style={styles.cameraContent}>
+              {/* 카메라 오버레이 내용 */}
+            </View>
+          </Camera>
         ) : (
           <View style={styles.cameraPlaceholder}>
+            <Text style={styles.placeholderText}>카메라가 꺼져 있습니다</Text>
           </View>
         )}
       </View>
@@ -295,6 +317,43 @@ const styles = StyleSheet.create({
     color: '#666666',
     fontFamily: 'Pretendard',
   },
+  permissionText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#666666',
+  },
+  permissionButton: {
+    backgroundColor: '#00AB96',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  permissionButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  camera: {
+    flex: 1,
+    width: '100%',
+  },
+  cameraContent: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  cameraPlaceholder: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#D9D9D9',
+  },
+  placeholderText: {
+    color: '#666666',
+    fontSize: 14,
+    textAlign: 'center',
+    fontFamily: 'Pretendard',
+  }
 });
 
 export default ReceiptCapture; 
