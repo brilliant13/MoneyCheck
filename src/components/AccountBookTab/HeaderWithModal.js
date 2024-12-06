@@ -23,10 +23,14 @@ const HeaderWithModal = ({
   const toggleModal = () => setModalVisible(!isModalVisible);
 
   const handleConfirm = () => {
+    console.log('선택된 연도:', tempYear, '선택된 월:', tempMonth);
     if (onMonthSelect) {
-      onMonthSelect({ year: tempYear, month: tempMonth }); // 부모 컴포넌트로 선택한 연도와 월 전달
+      onMonthSelect({
+        year: parseInt(tempYear, 10), // 숫자로 변환
+        month: parseInt(tempMonth, 10), // 숫자로 변환
+      });
     }
-    toggleModal(); // 모달 닫기
+    toggleModal();
   };
 
   return (
@@ -75,22 +79,7 @@ const HeaderWithModal = ({
                 <Text style={styles.confirmButtonText}>확인</Text>
               </TouchableOpacity>
             </View>
-
-
-
-
-
-
-
           </View>
-
-
-
-
-
-
-
-
         </View>
       </Modal>
     </View>

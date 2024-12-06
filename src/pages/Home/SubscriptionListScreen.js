@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
-    height: 60,
+    height: Platform.OS === 'android' ? 60 + StatusBar.currentHeight : 80, // iOS와 Android 높이 조정
+
     backgroundColor: '#ffffff',
     elevation: 3,
     shadowColor: '#000',
@@ -84,8 +85,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   androidHeader: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    height: Platform.OS === 'android' ? 60 + StatusBar.currentHeight : 60,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0, // 안드로이드 상태바 높이
+
   },
   headerTitle: {
     flex: 1,

@@ -1,9 +1,11 @@
+//src/pages/Home/HomeScreen.js
 import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Dimensions,
+  TouchableOpacity,
   FlatList,
   TouchableWithoutFeedback,
   Image,
@@ -14,7 +16,6 @@ import GoalCard from '../../components/HomeTab/GoalCard';
 import MoneyCard from '../../components/HomeTab/MoneyCard';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -74,8 +75,8 @@ const HomeScreen = ({ route }) => {
 
   const [currentPage, setCurrentPage] = useState(0); // currentPage 상태 추가
   const [totalIncome, setTotalIncome] = useState(2500000); // 기본 고정 수입
+  const [totalExpense, setTotalExpense] = useState(2500000); // 기본 고정 수입
   const navigation = useNavigation();
-
 
   // useFocusEffect 사용하여 화면에 포커스될 때마다 수입 데이터 로드
   useFocusEffect(
@@ -88,7 +89,6 @@ const HomeScreen = ({ route }) => {
             const newTotalIncome = incomes.reduce((total, income) => {
               return total + income.amount;
             }, 2500000); // 기존 고정 수입에 새로운 수입 추가
-            
             setTotalIncome(newTotalIncome);
           }
         } catch (error) {
@@ -96,11 +96,25 @@ const HomeScreen = ({ route }) => {
         }
       };
 
+      const loadExpenses = async () => {
+        try {
+          const existingData = await AsyncStorage.getItem('receipts');
+          if (existingData) {
+            const expenses = JSON.parse(existingData);
+            const newTotalExpense = expenses.reduce((total, expense) => {
+              return total + expense.amount;
+            }, 2500000); // 기존 고정 수입에 새로운 지출 추가
+            setTotalExpense(newTotalExpense);
+          }
+        } catch (error) {
+          console.error('지출 데이터 로드 실패:', error);
+        }
+      };
+
       loadIncomes();
+      loadExpenses();
     }, [])
   );
-  
-
 
   // 새로운 목표 추가 처리
   useEffect(() => {
@@ -116,16 +130,33 @@ const HomeScreen = ({ route }) => {
     }
   }, [route.params?.newSubscription]);
 
+
+    // 초기화 버튼 핸들러
+    const handleResetData = async () => {
+      try {
+        await AsyncStorage.clear();
+        setTotalIncome(0);
+        setTotalExpense(0);
+        console.log('AsyncStorage 초기화 완료');
+        alert('데이터가 초기화되었습니다.');
+      } catch (error) {
+        console.error('초기화 실패:', error);
+      }
+    };
+  
+
+    
+
+
+
   return (
     <View style={styles.container}>
-
       {/* MoneyCard 컴포넌트에 totalIncome 전달 */}
-      <MoneyCard 
-        income={totalIncome.toString()} 
-        expense="400000" 
+      <MoneyCard
+        income={totalIncome.toString()}
+        expense={totalExpense.toLocaleString()}
         style={styles.moneyPager}
       />
-      
 
       {/* 목표 목록 */}
       <Text style={styles.sectionTitle}>목표 목록</Text>
@@ -173,7 +204,7 @@ const HomeScreen = ({ route }) => {
         <View style={styles.subscriptionHeader}>
           <Text style={styles.subscriptionTitle}>구독 관리</Text>
           <TouchableWithoutFeedback onPress={() => navigation.navigate('SubscriptionScreen')}>
-            <Text style={styles.moreText}>더보기{`>`} </Text>
+            <Text style={styles.moreText}>더보기{`>`}</Text>
           </TouchableWithoutFeedback>
         </View>
         <Text style={styles.subscriptionSubtitle}>{subscriptions.length}개 구독 중</Text>
@@ -189,7 +220,13 @@ const HomeScreen = ({ route }) => {
           contentContainerStyle={styles.subscriptionList}
           showsHorizontalScrollIndicator={false}
         />
+        {/* 디버깅용 초기화 버튼 */}
+      {/* 디버깅이 끝나면 아래 TouchableOpacity를 주석 처리하세요 */}
+      <TouchableOpacity style={styles.resetButton} onPress={handleResetData}>
+        <Text style={styles.resetButtonText}>초기화</Text>
+      </TouchableOpacity>
       </View>
+       
     </View>
   );
 };
