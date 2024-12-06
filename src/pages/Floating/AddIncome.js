@@ -12,12 +12,6 @@ const AddIncome = ({ navigation }) => {
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  // const categories = [
-  //   { id: 1, emoji: '💰', name: '월급' },
-  //   { id: 2, emoji: '💸', name: '용돈' },
-  //   { id: 3, emoji: '📈', name: '투자' },
-  //   { id: 4, emoji: '📝', name: '기타' },
-  // ];
 
   const categories = [
     { id: 1, emoji: '💰', name: '월급', icon: require('../../assets/wage.png') },
