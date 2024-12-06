@@ -89,7 +89,7 @@ const ManualReceipt = ({ navigation, route }) => {
       alert('영수증이 저장되었습니다.');
       
       navigation.goBack();
-      // navigation.goBack();
+      navigation.goBack();
 
     } catch (error) {
       console.error('저장 실패:', error);

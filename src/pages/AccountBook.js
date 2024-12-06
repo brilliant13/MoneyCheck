@@ -48,22 +48,40 @@ const AccountBook = () => {
 
     const syncDailyData = async () => {
       try {
-        const dateKey = formatDate(selectedDay);
-    
         // 지출 데이터 로드
         const expenseData = await AsyncStorage.getItem('receipts');
         const expenses = expenseData ? JSON.parse(expenseData) : [];
+        
+        // 선택된 날짜와 동일한 날짜의 지출만 필터링
         const expenseForDate = expenses
           .filter((expense) => {
-            const [month, day] = expense.date.split('.').map(Number);
+            const expenseDate = new Date(expense.date);
             return (
-              month === selectedDay.getMonth() + 1 &&
-              day === selectedDay.getDate()
+              expenseDate.getFullYear() === selectedDay.getFullYear() &&
+              expenseDate.getMonth() === selectedDay.getMonth() &&
+              expenseDate.getDate() === selectedDay.getDate()
             );
           })
           .reduce((total, expense) => total + expense.amount, 0);
-    
+
         setDailyExpense(expenseForDate);
+
+        // 수입 데이터도 같은 방식으로 처리
+        const incomeData = await AsyncStorage.getItem('incomes');
+        const incomes = incomeData ? JSON.parse(incomeData) : [];
+        
+        const incomeForDate = incomes
+          .filter((income) => {
+            const incomeDate = new Date(income.date);
+            return (
+              incomeDate.getFullYear() === selectedDay.getFullYear() &&
+              incomeDate.getMonth() === selectedDay.getMonth() &&
+              incomeDate.getDate() === selectedDay.getDate()
+            );
+          })
+          .reduce((total, income) => total + income.amount, 0);
+
+        setDailyIncome(incomeForDate);
       } catch (error) {
         console.error('데이터 동기화 실패:', error);
       }
