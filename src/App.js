@@ -29,8 +29,8 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* Authentication */}
         {/* Uncomment these lines if Login and SignUp are needed */}
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
+        {/* <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
 
         {/* Main Tab Navigation */}
         <Stack.Screen name="Main" component={TabNavigator} />

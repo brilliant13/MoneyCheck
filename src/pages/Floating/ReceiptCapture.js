@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, Platform, StatusBar, Image, ActivityIndicator, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
@@ -7,6 +7,7 @@ import { processReceiptImage } from '../../utils/ocr';
 import styles from '../../styles/FloatingTabStyles/ReceiptCaptureStyles';
 
 const ReceiptCapture = ({ navigation, route }) => {
+  const camera = useRef(null);
   const [facing, setFacing] = useState('back')
   const [selectedImage, setSelectedImage] = useState(null);
   const [isCameraOn, setIsCameraOn] = useState(false);
@@ -42,9 +43,10 @@ const ReceiptCapture = ({ navigation, route }) => {
 
     try {
       console.log('사진 촬영 시도');
-      // CameraView에서는 takePictureAsync() 대신 다른 방식으로 사진 촬영
-      // 실제 구현은 expo-camera 문서 참조 필요
+      const photo = await camera.current.takePictureAsync();
       setIsCameraOn(false);
+      setSelectedImage(photo.uri);
+      await processImage(photo.uri);
     } catch (error) {
       console.error('사진 촬영 오류:', error);
       Alert.alert("촬영 오류", "사진 촬영 중 문제가 발생했습니다.");
@@ -102,6 +104,7 @@ const ReceiptCapture = ({ navigation, route }) => {
           <Image source={{ uri: selectedImage }} style={styles.selectedImage} />
         ) : isCameraOn ? (
           <CameraView
+            ref={camera}
             style={styles.camera}
             facing={facing}
           />
