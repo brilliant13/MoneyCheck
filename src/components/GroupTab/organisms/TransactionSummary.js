@@ -4,19 +4,18 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import TransactionGroup from '../molecules/TransactionGroup';
 import ShowMoreButton from '../atoms/ShowMoreButton';
-import transactionData from '../../../data/transactions.json';
 
-const TransactionSummary = () => {
+const TransactionSummary = ({ transactions }) => {
   return (
     <View style={styles.container}>
       <View style={styles.summaryContainer}>
         <View style={styles.groupContainer}>
-          <TransactionGroup type="income" items={transactionData.income} />
+          <TransactionGroup type="income" items={transactions.income} />
           <ShowMoreButton onPress={() => {}} />
         </View>
         <View style={styles.divider} />
         <View style={styles.groupContainer}>
-          <TransactionGroup type="expense" items={transactionData.expense} />
+          <TransactionGroup type="expense" items={transactions.expense} />
           <ShowMoreButton onPress={() => {}} />
         </View>
       </View>

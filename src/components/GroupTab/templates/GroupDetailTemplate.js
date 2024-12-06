@@ -6,10 +6,10 @@ import GroupTabs from '../molecules/GroupTabs';
 import TransactionSummary from '../organisms/TransactionSummary';
 import GoalCard from '../organisms/GoalCard';
 
-const GroupDetailTemplate = ({ goals }) => (
+const GroupDetailTemplate = ({ goals, transactions, onTabChange }) => (
   <ScrollView style={styles.container}>
-    <GroupTabs />
-    <TransactionSummary />
+    <GroupTabs onTabChange={onTabChange} />
+    <TransactionSummary transactions={transactions} />
     <View style={styles.goalContainer}>
       {goals.map((goal, index) => (
         <GoalCard 
