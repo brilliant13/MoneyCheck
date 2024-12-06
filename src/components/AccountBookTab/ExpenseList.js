@@ -20,7 +20,7 @@ const ExpenseList = () => {
     console.log(`${year}년 ${month}월 선택됨`);
   };
 
-  
+
   // const expenseData = [
   //   { id: 1, name: '용돈', date: '10.24', amount: '- 70,000원', icon: require('../../assets/money.png') },
   //   { id: 2, name: '주식', date: '10.24', amount: '- 50,000원', icon: require('../../assets/stock.png') },
@@ -35,46 +35,56 @@ const ExpenseList = () => {
       const parsedData = storedData ? JSON.parse(storedData) : [];
       console.log('전체 데이터:', parsedData);
 
+      const categoryIcons = {
+        meal: require('../../assets/meal.png'),
+        housing: require('../../assets/housing.png'),
+        transportation: require('../../assets/transportation.png'),
+        health: require('../../assets/health.png'),
+        culture: require('../../assets/culture.png'),
+        pet: require('../../assets/pets.png'),
+        others: require('../../assets/others.png'),
+        communication: require('../../assets/communication.png'),
+        shopping: require('../../assets/shopping.png'),
+      };
+
+
       // 데이터 필터링
-      const filteredData = parsedData.filter((item) => {
+      //     const filteredData = parsedData
+      //     .filter((item) => {
+      //       const itemDate = new Date(item.date);
+      //       const localYear = itemDate.getUTCFullYear();
+      //       const localMonth = itemDate.getUTCMonth() + 1;
 
-           // 날짜 파싱
-      const [month, day] = item.date.split('.').map(Number);
+      //       return localYear === selectedYear && localMonth === selectedMonth;
+      //     })
+      //     .map((item) => ({
+      //       ...item,
+      //       icon: categoryIcons[item.category], // 카테고리에 맞는 아이콘 추가
+      //     }));
 
+      //   console.log('필터링된 데이터:', filteredData);
+      //   setExpenseData(filteredData);
+      // } catch (error) {
+      //   console.error('Failed to load expense data:', error);
+      // }
+      // };
+      const filteredData = parsedData
+        .filter((item) => {
+          const itemDate = new Date(item.date);
+          const localYear = itemDate.getUTCFullYear();
+          const localMonth = itemDate.getUTCMonth() + 1;
 
-        const itemDate = new Date(item.date);
-
-        // UTC 시간을 로컬 시간으로 변환
-        const localYear = itemDate.getUTCFullYear(); // UTC 연도 가져오기
-        const localMonth = itemDate.getUTCMonth() + 1; // UTC 월 가져오기 (0부터 시작하므로 +1)
-
-        // console.log(
-        //   '원본 item.date:',
-        //   item.date,
-        //   '변환된 itemDate:',
-        //   itemDate.toLocaleString(),
-        //   '비교:',
-        //   localYear,
-        //   selectedYear,
-        //   localMonth,
-        //   selectedMonth
-        // );
-
-        console.log(
-          '원본 item.date:',
-          item.date,
-          '파싱된 월:',
-          month,
-          '파싱된 연도:',
-          today.getFullYear(),
-          '비교:',
-          month === selectedMonth,
-          selectedYear === today.getFullYear()
-        );
-
-return month === selectedMonth && selectedYear === today.getFullYear();
-        // return localYear === selectedYear && localMonth === selectedMonth;
-      });
+          return localYear === selectedYear && localMonth === selectedMonth;
+        })
+        .map((item) => ({
+          ...item,
+          icon: categoryIcons[item.category], // 카테고리에 맞는 아이콘 매핑
+          formattedDate: new Date(item.date).toLocaleDateString('ko-KR', {
+            month: '2-digit',
+            day: '2-digit',
+          }).replace(/\./g, ''), // 'MM.DD' 형식
+          formattedAmount: `- ${item.amount.toLocaleString()}원`, // 금액 앞에 '-' 추가
+        }));
 
       console.log('필터링된 데이터:', filteredData);
       setExpenseData(filteredData);
@@ -84,34 +94,8 @@ return month === selectedMonth && selectedYear === today.getFullYear();
   };
 
 
-
-  // useEffect(() => {
-    // const loadExpenses = async () => {
-    //   try {
-    //     const storedData = await AsyncStorage.getItem('expenses');
-    //     const expenses = storedData ? JSON.parse(storedData) : [];
-    //     const filteredExpenses = expenses.filter((item) => {
-    //       // const itemDate = new Date(item.date);
-    //       const [month, day] = item.date.split('.').map(Number);
-
-
-    //       return (
-    //         // itemDate.getFullYear() === selectedYear &&
-    //         // itemDate.getMonth() + 1 === selectedMonth
-    //         month === selectedMonth && selectedYear === today.getFullYear()
-    //       );
-    //     });
-    //     setExpenseData(filteredExpenses);
-    //   } catch (error) {
-    //     console.error('데이터 로드 실패:', error);
-    //   }
-    // };
-
-  //   loadExpenses();
-  // }, [selectedYear, selectedMonth]);
-
-   // 데이터 로드 및 상태 업데이트
-   useEffect(() => {
+  // 데이터 로드 및 상태 업데이트
+  useEffect(() => {
     loadExpenseData();
   }, [selectedYear, selectedMonth]);
 
@@ -132,18 +116,6 @@ return month === selectedMonth && selectedYear === today.getFullYear();
       />
 
       {/* <View style={styles.container}>
-        {expenseData.map((item) => (
-          <View key={item.id} style={styles.card}>
-            <Image source={item.icon} style={styles.icon} />
-            <View style={styles.textContainer}>
-              <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemDate}>{item.date}</Text>
-            </View>
-            <Text style={styles.itemAmount}>{item.amount}</Text>
-          </View>
-        ))}
-      </View> */}
-      <View style={styles.container}>
         {expenseData.length > 0 ? (
           expenseData.map((item) => (
             <View key={item.id} style={styles.card}>
@@ -153,6 +125,22 @@ return month === selectedMonth && selectedYear === today.getFullYear();
                 <Text style={styles.itemDate}>{item.date}</Text>
               </View>
               <Text style={styles.itemAmount}>{item.amount}</Text>
+            </View>
+          ))
+        ) : (
+          <Text style={styles.noDataText}>해당 월에는 데이터가 없습니다.</Text>
+        )}
+      </View> */}
+      <View style={styles.container}>
+        {expenseData.length > 0 ? (
+          expenseData.map((item) => (
+            <View key={item.id} style={styles.card}>
+              <Image source={item.icon} style={styles.icon} />
+              <View style={styles.textContainer}>
+                <Text style={styles.itemName}>{item.storeName}</Text> {/* 상호명 */}
+                <Text style={styles.itemDate}>{item.formattedDate}</Text> {/* 날짜 */}
+              </View>
+              <Text style={styles.itemAmount}>{item.formattedAmount}</Text> {/* 금액 */}
             </View>
           ))
         ) : (

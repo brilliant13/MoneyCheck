@@ -46,31 +46,6 @@ const AccountBook = () => {
     setMonthlyExpense(expenseInThousands);
   };
 
-
-    // 선택된 날짜 데이터를 동기화
-    // const syncDailyData = async () => {
-    //   try {
-    //     const dateKey = formatDate(selectedDay);
-  
-    //     // 수입 데이터 로드
-    //     const incomeData = await AsyncStorage.getItem('incomes');
-    //     const incomes = incomeData ? JSON.parse(incomeData) : [];
-    //     const incomeForDate = incomes
-    //       .filter((income) => formatDate(new Date(income.date)) === dateKey)
-    //       .reduce((total, income) => total + income.amount, 0);
-    //     setDailyIncome(incomeForDate);
-  
-    //     // 지출 데이터 로드
-    //     const expenseData = await AsyncStorage.getItem('receipts');
-    //     const expenses = expenseData ? JSON.parse(expenseData) : [];
-    //     const expenseForDate = expenses
-    //       .filter((expense) => formatDate(new Date(expense.date)) === dateKey)
-    //       .reduce((total, expense) => total + expense.amount, 0);
-    //     setDailyExpense(expenseForDate);
-    //   } catch (error) {
-    //     console.error('데이터 동기화 실패:', error);
-    //   }
-    // };
     const syncDailyData = async () => {
       try {
         const dateKey = formatDate(selectedDay);
@@ -167,17 +142,6 @@ const AccountBook = () => {
   };
 
 
-
-
-  // 날짜 클릭 시 데이터를 업데이트하는 핸들러
-  // const handleDateClick = (day) => {
-  //   // 날짜 클릭 시, 수입과 지출을 랜덤 값으로 변경
-  //   setSelectedDay(day);
-  //   setDailyIncome(Math.floor(Math.random() * 1000000 / 10000) * 10000); // 10,000원 단위, 최대 1,000,000원
-  //   setDailyExpense(Math.floor(Math.random() * 200000 / 10000) * 10000); // 10,000원 단위, 최대 200,000원
-  // };
-  
-
   // 랜덤 소비액 생성 (예시 데이터)
   const randomMonthlyExpense = (month) => {
     // 월에 따라 랜덤 소비액 생성
@@ -210,27 +174,14 @@ const AccountBook = () => {
 
       {selectedTab === '전체' && (
         <>
-          {/* Calendar에서 클릭 이벤트 핸들러 전달 */}
-          {/* <Calendar onDateClick={handleDateClick} /> */}
-          {/* Calendar에 onMonthSelect 전달 */}
-
-
-
           <Calendar onDateClick={handleDateClick} onMonthChange={handleMonthChange} />
-
-          {/* TotalExpense, Income, Expense 분리된 컴포넌트 호출 */}
-          {/* <TotalExpense month="11월" expense={monthlyExpense} /> */}
-
 
           <View style={styles.MonthsummaryContainer}>
             <TotalExpense month={selectedMonth} expense={monthlyExpense} />
           </View>
 
-
           <View style={styles.summaryContainer}>
             <MoneyCard income={dailyIncome.toString()} expense={dailyExpense.toLocaleString()} style={styles.moneyPager} />
-            {/* <Income income={dailyData.income} /> */}
-            {/* <Expense expense={dailyData.expense} /> */}
           </View>
         </>
       )}

@@ -22,22 +22,20 @@ const ManualReceipt = ({ navigation, route }) => {
 
 
 
-
-  
-
-
-
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState(null);
+
+
   const [categories] = useState([
-    { label: '식비', value: 'food' },
+    { label: '식비', value: 'meal' },
     { label: '주거비', value: 'housing' },
     { label: '교통비', value: 'transportation' },
-    { label: '의료/건강', value: 'medical' },
-    { label: '쇼핑', value: 'shopping' },
+    { label: '의료/건강', value: 'health' },
     { label: '문화/여가', value: 'culture' },
     { label: '반려동물', value: 'pet' },
-    { label: '기타', value: 'etc' }
+    { label: '기타', value: 'others' },
+    { label: '통신비', value: 'communication' },
+    { label: '쇼핑', value: 'shopping' },
   ]);
 
   const paymentMethods = [
@@ -50,13 +48,6 @@ const ManualReceipt = ({ navigation, route }) => {
 
   const moods = ['🤩', '😊', '😑', '🥲', '😭'];
 
-  // const categories = [
-  //   { id: 1, emoji: '💰', name: '월급', icon: require('../../assets/wage.png') },
-  //   { id: 2, emoji: '💸', name: '용돈', icon: require('../../assets/money.png') },
-  //   { id: 3, emoji: '📈', name: '투자', icon: require('../../assets/etc.png') },
-  //   { id: 4, emoji: '📝', name: '기타', icon: require('../../assets/etc.png') },
-  // ];
-
 
   const formatDate = (date) => {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
@@ -68,6 +59,8 @@ const ManualReceipt = ({ navigation, route }) => {
     setAmount(formattedValue);
   };
 
+
+
   const handleSave = async () => {
     try {
       if (!storeName || !amount || !selectedDate || !paymentMethod || !category) {
@@ -75,53 +68,35 @@ const ManualReceipt = ({ navigation, route }) => {
         return;
       }
 
+    
       const newReceipt = {
         id: Date.now(),
-        name: categories.find((cat) => cat.id === selectedCategory).name,
-        date: `${selectedDate.getMonth() + 1}.${selectedDate.getDate()}`,
-        amount: `- ${parseInt(amount).toLocaleString()}원`,
-        icon: categories.find((cat) => cat.id === selectedCategory).icon,
-
-
-        businessNumber,
         storeName,
-
-        
-        
-
         amount: parseInt(amount.replace(/,/g, '')),
         paymentMethod,
-        category,
+        category, // 선택된 카테고리 value (e.g., 'meal')
         date: selectedDate,
-
-        mood: selectedMood !== null ? moods[selectedMood] : null,
-        createdAt: new Date()
       };
+
+
 
       const existingData = await AsyncStorage.getItem('receipts');
       const receipts = existingData ? JSON.parse(existingData) : [];
       receipts.push(newReceipt);
       await AsyncStorage.setItem('receipts', JSON.stringify(receipts));
 
-
-      // alert('영수증이 저장되었습니다.');
       console.log('저장된 데이터:', receipts); // 저장된 데이터 출력
-      //alert('지출이 저장되었습니다.');
-
-      //const previousScreen = route.params?.previousScreen || 'AccountBook';
-      //navigation.navigate(previousScreen);
-
-      
       alert('영수증이 저장되었습니다.');
       
       navigation.goBack();
-      navigation.goBack();
+      // navigation.goBack();
 
     } catch (error) {
       console.error('저장 실패:', error);
       alert('저장에 실패했습니다.');
     }
   };
+
 
   return (
     <View style={styles.container}>       
@@ -196,6 +171,10 @@ const ManualReceipt = ({ navigation, route }) => {
           selectedDate={selectedDate}
         />
 
+
+
+
+{/* //////// */}{/* //////// */}{/* //////// */}{/* //////// */}
       <Text style={styles.label}>카테고리</Text>
         <DropDownPicker
           open={open}
@@ -217,6 +196,10 @@ const ManualReceipt = ({ navigation, route }) => {
           bottomOffset={100}
           dropDownDirection="AUTO"
         />
+
+{/* //////// */}{/* //////// */}{/* //////// */}{/* //////// */}
+
+
 
         <Text style={styles.label}>오늘 기분 어떠세요?</Text>
         <View style={styles.moodContainer}>
