@@ -10,17 +10,17 @@ const FloatingStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen 
-        name="ManualReceipt" 
-        component={ManualReceipt}
-        options={{
-          header: () => <CustomHeader title="지출 추가하기" showBack={true} />,
-        }}
-      />
-      <Stack.Screen 
         name="ReceiptCapture" 
         component={ReceiptCapture}
         options={{
           header: () => <CustomHeader title="영수증 촬영" showBack={true} />,
+        }}
+      />
+      <Stack.Screen 
+        name="ManualReceipt" 
+        component={ManualReceipt}
+        options={{
+          header: () => <CustomHeader title="지출 추가하기" showBack={true} />,
         }}
       />
       <Stack.Screen 

@@ -22,6 +22,12 @@ const AddIncome = ({ navigation }) => {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
   };
 
+  const handleAmountChange = (text) => {
+    const numericValue = text.replace(/[^0-9]/g, '');
+    const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    setAmount(formattedValue);
+  };
+
   const handleSave = async () => {
     try {
       if (!amount || !source || !selectedCategory) {
@@ -29,13 +35,15 @@ const AddIncome = ({ navigation }) => {
         return;
       }
 
+      const numericAmount = parseInt(amount.replace(/,/g, ''));
+
       const selectedCategoryInfo = categories.find(
         (cat) => cat.id === selectedCategory
       );
 
       const newIncome = {
         id: Date.now(),
-        amount: parseInt(amount),
+        amount: numericAmount,
         source,
         date: selectedDate,
         category: {
@@ -66,11 +74,11 @@ const AddIncome = ({ navigation }) => {
         <Text style={styles.label}>수입금액</Text>
         <TextInput
           style={styles.input}
-          placeholder="수입 금액을 입력해 주세요"
+          placeholder="금액을 입력해주세요"
           value={amount}
-          onChangeText={setAmount}
-          placeholderTextColor="#949494"
+          onChangeText={handleAmountChange}
           keyboardType="numeric"
+          placeholderTextColor="#949494"
         />
       </View>
 
@@ -78,7 +86,7 @@ const AddIncome = ({ navigation }) => {
         <Text style={styles.label}>수입처</Text>
         <TextInput
           style={styles.input}
-          placeholder="상호를 입력해 주세요"
+          placeholder="예: 회사명, 은행명 등"
           value={source}
           onChangeText={setSource}
           placeholderTextColor="#949494"

@@ -3,17 +3,17 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 const DatePicker = ({ isVisible, onClose, onSelect, selectedDate }) => {
-  const [tempYear, setTempYear] = useState(selectedDate.getFullYear());
-  const [tempMonth, setTempMonth] = useState(selectedDate.getMonth() + 1);
-  const [tempDay, setTempDay] = useState(selectedDate.getDate());
+  const [tempYear, setTempYear] = useState(selectedDate.getFullYear().toString());
+  const [tempMonth, setTempMonth] = useState((selectedDate.getMonth() + 1).toString());
+  const [tempDay, setTempDay] = useState(selectedDate.getDate().toString());
 
   const handleConfirm = () => {
-    onSelect(new Date(tempYear, tempMonth - 1, tempDay));
+    onSelect(new Date(parseInt(tempYear), parseInt(tempMonth) - 1, parseInt(tempDay)));
     onClose();
   };
 
   const getDaysInMonth = (year, month) => {
-    return new Date(year, month, 0).getDate();
+    return new Date(parseInt(year), parseInt(month), 0).getDate();
   };
 
   return (
@@ -32,7 +32,7 @@ const DatePicker = ({ isVisible, onClose, onSelect, selectedDate }) => {
                   <Picker.Item
                     key={i}
                     label={`${2020 + i}`}
-                    value={2020 + i}
+                    value={(2020 + i).toString()}
                   />
                 ))}
               </Picker>
@@ -49,7 +49,7 @@ const DatePicker = ({ isVisible, onClose, onSelect, selectedDate }) => {
                   <Picker.Item
                     key={i}
                     label={`${i + 1}`}
-                    value={i + 1}
+                    value={(i + 1).toString()}
                   />
                 ))}
               </Picker>
@@ -66,7 +66,7 @@ const DatePicker = ({ isVisible, onClose, onSelect, selectedDate }) => {
                   <Picker.Item
                     key={i}
                     label={`${i + 1}`}
-                    value={i + 1}
+                    value={(i + 1).toString()}
                   />
                 ))}
               </Picker>

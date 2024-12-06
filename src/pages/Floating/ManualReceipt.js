@@ -1,17 +1,39 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform, StatusBar } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from '../../components/FloatingTab/DatePicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ManualReceipt = ({ navigation, route }) => {
-  const [businessNumber, setBusinessNumber] = useState('');
-  const [representative, setRepresentative] = useState('');
-  const [storeName, setStoreName] = useState('');
-  const [amount, setAmount] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const ocrData = route.params?.ocrData || {};
+  
+  const [businessNumber, setBusinessNumber] = useState(ocrData.businessNumber || '');
+  const [storeName, setStoreName] = useState(ocrData.storeName || '');
+  const [amount, setAmount] = useState(ocrData.amount?.toString() || '');
+  const [paymentMethod, setPaymentMethod] = useState(ocrData.paymentMethod || '신용카드');
+  const [selectedDate, setSelectedDate] = useState(ocrData.date ? new Date(ocrData.date) : new Date());
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedMood, setSelectedMood] = useState(null);
+
+  const [open, setOpen] = useState(false);
+  const [category, setCategory] = useState(null);
+  const [categories] = useState([
+    { label: '식비', value: 'food' },
+    { label: '주거비', value: 'housing' },
+    { label: '교통비', value: 'transportation' },
+    { label: '의료/건강', value: 'medical' },
+    { label: '쇼핑', value: 'shopping' },
+    { label: '문화/여가', value: 'culture' },
+    { label: '반려동물', value: 'pet' },
+    { label: '기타', value: 'etc' }
+  ]);
+
+  const paymentMethods = [
+    '신용카드', 
+    '체크카드', 
+    '현금', 
+    '기타'
+  ];
 
   const moods = ['🤩', '😊', '😑', '🥲', '😭'];
 
@@ -19,19 +41,26 @@ const ManualReceipt = ({ navigation, route }) => {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
   };
 
+  const handleAmountChange = (text) => {
+    const numericValue = text.replace(/[^0-9]/g, '');
+    const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    setAmount(formattedValue);
+  };
+
   const handleSave = async () => {
     try {
-      if (!storeName || !amount || !selectedDate) {
-        alert('상호, 금액, 발행일은 필수 입력 항목입니다.');
+      if (!storeName || !amount || !selectedDate || !paymentMethod || !category) {
+        alert('상호, 금액, 발행일, 결제수단, 카테고리는 필수 입력 항목입니다.');
         return;
       }
 
       const newReceipt = {
         id: Date.now(),
         businessNumber,
-        representative,
         storeName,
-        amount: parseInt(amount),
+        amount: parseInt(amount.replace(/,/g, '')),
+        paymentMethod,
+        category,
         date: selectedDate,
         mood: selectedMood !== null ? moods[selectedMood] : null,
         createdAt: new Date()
@@ -44,8 +73,8 @@ const ManualReceipt = ({ navigation, route }) => {
       
       alert('영수증이 저장되었습니다.');
       
-      const previousScreen = route.params?.previousScreen || 'AccountBook';
-      navigation.navigate(previousScreen);
+      navigation.goBack();
+      navigation.goBack();
     } catch (error) {
       console.error('저장 실패:', error);
       alert('저장에 실패했습니다.');
@@ -66,14 +95,6 @@ const ManualReceipt = ({ navigation, route }) => {
           placeholderTextColor="#949494"
         />
 
-        <Text style={styles.label}>대표자</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="대표자를 입력해 주세요"
-          value={representative}
-          onChangeText={setRepresentative}
-        />
-
         <Text style={styles.label}>상호</Text>
         <TextInput
           style={styles.input}
@@ -87,9 +108,31 @@ const ManualReceipt = ({ navigation, route }) => {
           style={styles.input}
           placeholder="금액을 입력해 주세요"
           value={amount}
-          onChangeText={setAmount}
+          onChangeText={handleAmountChange}
           keyboardType="numeric"
+          placeholderTextColor="#949494"
         />
+
+        <Text style={styles.label}>결제수단</Text>
+        <View style={styles.paymentMethodContainer}>
+          {paymentMethods.map((method) => (
+            <TouchableOpacity
+              key={method}
+              style={[
+                styles.paymentMethodButton,
+                paymentMethod === method && styles.selectedPaymentMethod
+              ]}
+              onPress={() => setPaymentMethod(method)}
+            >
+              <Text style={[
+                styles.paymentMethodText,
+                paymentMethod === method && styles.selectedPaymentMethodText
+              ]}>
+                {method}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
 
         <Text style={styles.label}>발행일</Text>
         <TouchableOpacity 
@@ -108,6 +151,28 @@ const ManualReceipt = ({ navigation, route }) => {
           onClose={() => setDatePickerVisible(false)}
           onSelect={setSelectedDate}
           selectedDate={selectedDate}
+        />
+
+      <Text style={styles.label}>카테고리</Text>
+        <DropDownPicker
+          open={open}
+          value={category}
+          items={categories}
+          setOpen={setOpen}
+          setValue={setCategory}
+          style={styles.dropdown}
+          dropDownContainerStyle={styles.dropdownContainer}
+          placeholderStyle={styles.dropdownPlaceholder}
+          textStyle={styles.dropdownText}
+          placeholder="카테고리를 선택해주세요"
+          zIndex={3000}
+          zIndexInverse={1000}
+          position="auto"
+          listMode="SCROLLVIEW"
+          autoScroll={true}
+          maxHeight={200}
+          bottomOffset={100}
+          dropDownDirection="AUTO"
         />
 
         <Text style={styles.label}>오늘 기분 어떠세요?</Text>
@@ -227,6 +292,56 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard',
     fontWeight: '600',
   },
+  paymentMethodContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 8,
+    marginBottom: 20,
+  },
+  paymentMethodButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E8E8E8',
+    backgroundColor: '#FFFFFF',
+  },
+  selectedPaymentMethod: {
+    backgroundColor: '#00B9A5',
+    borderColor: '#00B9A5',
+  },
+  paymentMethodText: {
+    color: '#666666',
+    fontSize: 14,
+    fontFamily: 'Pretendard',
+  },
+  selectedPaymentMethodText: {
+    color: '#FFFFFF',
+  },
+  dropdown: {
+    backgroundColor: '#F9F9F9',
+    borderWidth: 1,
+    borderColor: '#E8E8E8',
+    borderRadius: 6,
+    marginBottom: 20,
+  },
+  dropdownContainer: {
+    backgroundColor: '#F9F9F9',
+    borderWidth: 1,
+    borderColor: '#E8E8E8',
+    borderRadius: 6,
+  },
+  dropdownText: {
+    fontSize: 14,
+    fontFamily: 'Pretendard',
+    color: '#222222',
+  },
+  dropdownPlaceholder: {
+    color: '#949494',
+    fontSize: 14,
+    fontFamily: 'Pretendard',
+  }
 });
 
 export default ManualReceipt; 
