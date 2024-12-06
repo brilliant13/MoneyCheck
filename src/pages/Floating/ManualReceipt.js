@@ -50,12 +50,12 @@ const ManualReceipt = ({ navigation, route }) => {
 
   const moods = ['🤩', '😊', '😑', '🥲', '😭'];
 
-  const categories = [
-    { id: 1, emoji: '💰', name: '월급', icon: require('../../assets/wage.png') },
-    { id: 2, emoji: '💸', name: '용돈', icon: require('../../assets/money.png') },
-    { id: 3, emoji: '📈', name: '투자', icon: require('../../assets/etc.png') },
-    { id: 4, emoji: '📝', name: '기타', icon: require('../../assets/etc.png') },
-  ];
+  // const categories = [
+  //   { id: 1, emoji: '💰', name: '월급', icon: require('../../assets/wage.png') },
+  //   { id: 2, emoji: '💸', name: '용돈', icon: require('../../assets/money.png') },
+  //   { id: 3, emoji: '📈', name: '투자', icon: require('../../assets/etc.png') },
+  //   { id: 4, emoji: '📝', name: '기타', icon: require('../../assets/etc.png') },
+  // ];
 
 
   const formatDate = (date) => {
@@ -236,6 +236,7 @@ const ManualReceipt = ({ navigation, route }) => {
         </View>
         {/* 공백 추가 */}
         <View style={styles.bottomSpacing} />
+        </View> {/* inputContainer 닫는 태그 */}
       </ScrollView>
 
       {/* 저장 버튼 */}
