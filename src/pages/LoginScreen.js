@@ -1,6 +1,6 @@
 //src/pages/LoginScreen.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 // Firebase 인증 모듈 가져오기
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
@@ -23,7 +23,6 @@ const LoginScreen = ({ navigation }) => {
         }
     };
 
-
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -44,6 +43,9 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+            {/* 로고 이미지 추가 */}
+            <Image source={require('../assets/Logo.png')} style={styles.logo} />
+            
             <View style={styles.inputContainer}>
                 <Text style={styles.label}>이메일</Text>
                 <TextInput
@@ -84,6 +86,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#ffffff',
     },
+    logo: {
+        width: 150,
+        height: 150,
+        alignSelf: 'center', // 가운데 정렬
+        marginBottom: 80, // 입력 필드와 간격
+    },
     inputContainer: {
         marginBottom: 30,
     },
@@ -116,7 +124,7 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#888',
         fontSize: 14,
-        marginTop: 20,
+        marginTop: 140,
         textAlign: 'center',
     },
     signUpLink: {
