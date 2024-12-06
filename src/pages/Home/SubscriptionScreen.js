@@ -15,8 +15,8 @@ const subscriptions = [
   { id: '1', title: '티빙', icon: require('../../assets/tving.png'), nextPayment: '11월 15일', nextPayDay: '15일', monthlyFee: '월 9,500원 결제' },
   { id: '2', title: '넷플릭스', icon: require('../../assets/netflix.png'), nextPayment: '11월 21일', nextPayDay: '21일', monthlyFee: '월 13,500원 결제' },
   { id: '3', title: '디즈니 플러스', icon: require('../../assets/disney.png'), nextPayment: '11월 21일', nextPayDay: '21일', monthlyFee: '월 9,500원 결제' },
-  { id: '4', title: '쿠팡 플레이', icon: require('../../assets/coopang.png'), nextPayment: '11월 8일', nextPayDay: '8일', monthlyFee: '월 9,500원 결제' },
-  { id: '5', title: '왓챠', icon: require('../../assets/watcha.png'), nextPayment: '11월 17일', nextPayDay: '15일', monthlyFee: '월 12,900원 결제' },
+  // { id: '4', title: '쿠팡 플레이', icon: require('../../assets/coopang.png'), nextPayment: '11월 8일', nextPayDay: '8일', monthlyFee: '월 9,500원 결제' },
+  // { id: '5', title: '왓챠', icon: require('../../assets/watcha.png'), nextPayment: '11월 17일', nextPayDay: '15일', monthlyFee: '월 12,900원 결제' },
 ];
 
 const SubscriptionScreen = ({ navigation }) => {

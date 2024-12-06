@@ -75,7 +75,7 @@ const HomeScreen = ({ route }) => {
 
   const [currentPage, setCurrentPage] = useState(0); // currentPage 상태 추가
   const [totalIncome, setTotalIncome] = useState(2500000); // 기본 고정 수입
-  const [totalExpense, setTotalExpense] = useState(2500000); // 기본 고정 수입
+  const [totalExpense, setTotalExpense] = useState(630000); // 기본 고정 지출
   const navigation = useNavigation();
 
   // useFocusEffect 사용하여 화면에 포커스될 때마다 수입 데이터 로드
@@ -103,7 +103,7 @@ const HomeScreen = ({ route }) => {
             const expenses = JSON.parse(existingData);
             const newTotalExpense = expenses.reduce((total, expense) => {
               return total + expense.amount;
-            }, 2500000); // 기존 고정 수입에 새로운 지출 추가
+            }, 630000); // 기존 고정 지출에 새로운 지출 추가
             setTotalExpense(newTotalExpense);
           }
         } catch (error) {
@@ -153,7 +153,7 @@ const HomeScreen = ({ route }) => {
     <View style={styles.container}>
       {/* MoneyCard 컴포넌트에 totalIncome 전달 */}
       <MoneyCard
-        income={totalIncome.toString()}
+        income={totalIncome.toLocaleString()}
         expense={totalExpense.toLocaleString()}
         style={styles.moneyPager}
       />
@@ -222,11 +222,11 @@ const HomeScreen = ({ route }) => {
         />
         {/* 디버깅용 초기화 버튼 */}
       {/* 디버깅이 끝나면 아래 TouchableOpacity를 주석 처리하세요 */}
+      
+      </View>
       <TouchableOpacity style={styles.resetButton} onPress={handleResetData}>
         <Text style={styles.resetButtonText}>초기화</Text>
       </TouchableOpacity>
-      </View>
-       
     </View>
   );
 };
@@ -327,6 +327,9 @@ const styles = StyleSheet.create({
     width: 58,
     height: 58,
     borderRadius: 12,
+  },
+  resetButtonText: {
+    color: '#FFFFFF',
   },
 });
 

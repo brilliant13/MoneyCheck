@@ -19,11 +19,21 @@ const GoalDetailScreen = ({ navigation, route }) => {
   const { goal } = route.params; // 클릭한 목표 데이터 받아오기
 
   const savingsHistory = [
-    { id: '1', month: '9월', date: '09.24', amount: 70000 },
-    { id: '2', month: '8월', date: '08.24', amount: 70000 },
-    { id: '3', month: '7월', date: '07.24', amount: 70000 },
-    { id: '4', month: '6월', date: '06.24', amount: 70000 },
-    { id: '5', month: '5월', date: '05.24', amount: 70000 },
+    { id: '1', month: '11월', date: '11.24', amount: 70000 },
+    { id: '2', month: '10월', date: '10.24', amount: 70000 },
+    { id: '3', month: '9월', date: '09.24', amount: 70000 },
+    { id: '4', month: '8월', date: '08.24', amount: 70000 },
+    { id: '5', month: '7월', date: '07.24', amount: 70000 },
+    { id: '6', month: '6월', date: '06.24', amount: 70000 },
+    { id: '7', month: '5월', date: '05.24', amount: 70000 },
+    { id: '8', month: '4월', date: '04.24', amount: 70000 },
+    { id: '9', month: '3월', date: '03.24', amount: 70000 },
+    { id: '10', month: '2월', date: '02.24', amount: 70000 },
+    { id: '11', month: '1월', date: '01.24', amount: 70000 },
+    { id: '12', month: '12월', date: '12.24', amount: 70000 },
+    { id: '13', month: '11월', date: '11.24', amount: 70000 },
+    { id: '14', month: '10월', date: '10.24', amount: 70000 },
+    { id: '15', month: '9월', date: '09.24', amount: 70000 },
   ];
 
   return (

@@ -11,16 +11,26 @@ const Statistics = () => {
 
   // 새로운 랜덤 데이터를 생성하는 함수
   const generateRandomData = () => {
-    const getRandomAmount = () => Math.floor(Math.random() * 1000001);
+    const getRandomAmount1 = () => Math.floor(300000 +Math.random() * 10000); //식비
+    const getRandomAmount2 = () => Math.floor(500000 +Math.random() * 30000); //주거비
+    const getRandomAmount3 = () => Math.floor(50000 +Math.random() * 10000); //교통비
+    const getRandomAmount4 = () => Math.floor(1000 +Math.random() * 20000); //의료/건강
+    const getRandomAmount5 = () => Math.floor(100000 +Math.random() * 10000); //쇼핑
+    const getRandomAmount6 = () => Math.floor(100000 +Math.random() * 10000); //문화/여기
+    const getRandomAmount7 = () => Math.floor(100000 +Math.random() * 10000); //반려동물
+    const getRandomAmount8 = () => Math.floor(50000 +Math.random() * 10000); //기타
+
+    
+
     return [
-      { category: "식비", amount: getRandomAmount() },
-      { category: "주거비", amount: getRandomAmount() },
-      { category: "교통비", amount: getRandomAmount() },
-      { category: "의료/건강", amount: getRandomAmount() },
-      { category: "쇼핑", amount: getRandomAmount() },
-      { category: "문화/여가", amount: getRandomAmount() },
-      { category: "반려동물", amount: getRandomAmount() },
-      { category: "기타", amount: getRandomAmount() },
+      { category: "식비", amount: getRandomAmount1() },
+      { category: "주거비", amount: getRandomAmount2() },
+      { category: "교통비", amount: getRandomAmount3() },
+      { category: "의료/건강", amount: getRandomAmount4() },
+      { category: "쇼핑", amount: getRandomAmount5() },
+      { category: "문화/여가", amount: getRandomAmount6() },
+      { category: "반려동물", amount: getRandomAmount7() },
+      { category: "기타", amount: getRandomAmount8() },
     ];
   };
 

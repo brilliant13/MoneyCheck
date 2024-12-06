@@ -42,6 +42,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
     // justifyContent: 'space-between',
   },
+  resetButtonText: {
+    color: '#FFFFFF',
+  },
  
  
 });
