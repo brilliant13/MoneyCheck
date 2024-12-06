@@ -20,6 +20,7 @@ const ExpenseList = () => {
     console.log(`${year}년 ${month}월 선택됨`);
   };
 
+  
   // const expenseData = [
   //   { id: 1, name: '용돈', date: '10.24', amount: '- 70,000원', icon: require('../../assets/money.png') },
   //   { id: 2, name: '주식', date: '10.24', amount: '- 50,000원', icon: require('../../assets/stock.png') },

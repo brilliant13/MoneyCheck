@@ -28,8 +28,13 @@ const AccountBook = () => {
   ); // 선택된 월
   const [selectedDay, setSelectedDay] = useState(new Date()); // 현재 선택된 날짜
 
-  const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-
+  // const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}.${month}.${day}`;
+  };
   
 
   const handleMonthChange = (year, month) => {
@@ -43,24 +48,46 @@ const AccountBook = () => {
 
 
     // 선택된 날짜 데이터를 동기화
+    // const syncDailyData = async () => {
+    //   try {
+    //     const dateKey = formatDate(selectedDay);
+  
+    //     // 수입 데이터 로드
+    //     const incomeData = await AsyncStorage.getItem('incomes');
+    //     const incomes = incomeData ? JSON.parse(incomeData) : [];
+    //     const incomeForDate = incomes
+    //       .filter((income) => formatDate(new Date(income.date)) === dateKey)
+    //       .reduce((total, income) => total + income.amount, 0);
+    //     setDailyIncome(incomeForDate);
+  
+    //     // 지출 데이터 로드
+    //     const expenseData = await AsyncStorage.getItem('receipts');
+    //     const expenses = expenseData ? JSON.parse(expenseData) : [];
+    //     const expenseForDate = expenses
+    //       .filter((expense) => formatDate(new Date(expense.date)) === dateKey)
+    //       .reduce((total, expense) => total + expense.amount, 0);
+    //     setDailyExpense(expenseForDate);
+    //   } catch (error) {
+    //     console.error('데이터 동기화 실패:', error);
+    //   }
+    // };
     const syncDailyData = async () => {
       try {
         const dateKey = formatDate(selectedDay);
-  
-        // 수입 데이터 로드
-        const incomeData = await AsyncStorage.getItem('incomes');
-        const incomes = incomeData ? JSON.parse(incomeData) : [];
-        const incomeForDate = incomes
-          .filter((income) => formatDate(new Date(income.date)) === dateKey)
-          .reduce((total, income) => total + income.amount, 0);
-        setDailyIncome(incomeForDate);
-  
+    
         // 지출 데이터 로드
         const expenseData = await AsyncStorage.getItem('receipts');
         const expenses = expenseData ? JSON.parse(expenseData) : [];
         const expenseForDate = expenses
-          .filter((expense) => formatDate(new Date(expense.date)) === dateKey)
+          .filter((expense) => {
+            const [month, day] = expense.date.split('.').map(Number);
+            return (
+              month === selectedDay.getMonth() + 1 &&
+              day === selectedDay.getDate()
+            );
+          })
           .reduce((total, expense) => total + expense.amount, 0);
+    
         setDailyExpense(expenseForDate);
       } catch (error) {
         console.error('데이터 동기화 실패:', error);
@@ -69,43 +96,43 @@ const AccountBook = () => {
 
 
   // useFocusEffect 사용하여 화면에 포커스될 때마다 수입 데이터 로드
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     const loadIncomes = async () => {
+  useFocusEffect(
+    React.useCallback(() => {
+      const loadIncomes = async () => {
 
-  //       try {
-  //         const existingData = await AsyncStorage.getItem('incomes');
-  //         if (existingData) {
-  //           const incomes = JSON.parse(existingData);
-  //           const newDailyIncome = incomes.reduce((total, income) => {
-  //             return total + income.amount;
-  //           }, 10000); // 기존 고정 수입에 새로운 수입 추가
+        try {
+          const existingData = await AsyncStorage.getItem('incomes');
+          if (existingData) {
+            const incomes = JSON.parse(existingData);
+            const newDailyIncome = incomes.reduce((total, income) => {
+              return total + income.amount;
+            }, 10000); // 기존 고정 수입에 새로운 수입 추가
 
-  //           setDailyIncome(newDailyIncome);
-  //         }
-  //       } catch (error) {
-  //         console.error('수입 데이터 로드 실패:', error);
-  //       }
+            setDailyIncome(newDailyIncome);
+          }
+        } catch (error) {
+          console.error('수입 데이터 로드 실패:', error);
+        }
 
-  //     };
+      };
 
-  //     const loadExpenses = async () => {
-  //       try {
-  //         const existingData = await AsyncStorage.getItem('receipts');
-  //         if (existingData) {
-  //           const expenses = JSON.parse(existingData);
-  //           const newDailyExpense = expenses.reduce((total, expense) => total + expense.amount, 0);
-  //           setDailyExpense(newDailyExpense);
-  //         }
-  //       } catch (error) {
-  //         console.error('지출 데이터 로드 실패:', error);
-  //       }
-  //     };
+      const loadExpenses = async () => {
+        try {
+          const existingData = await AsyncStorage.getItem('receipts');
+          if (existingData) {
+            const expenses = JSON.parse(existingData);
+            const newDailyExpense = expenses.reduce((total, expense) => total + expense.amount, 0);
+            setDailyExpense(newDailyExpense);
+          }
+        } catch (error) {
+          console.error('지출 데이터 로드 실패:', error);
+        }
+      };
 
-  //     loadIncomes();
-  //     loadExpenses();
-  //   }, [])
-  // );
+      loadIncomes();
+      loadExpenses();
+    }, [])
+  );
 
   useFocusEffect(
     React.useCallback(() => {
