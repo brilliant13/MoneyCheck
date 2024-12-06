@@ -1,3 +1,4 @@
+// src/pages/Floating/AddIncome.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,11 +12,18 @@ const AddIncome = ({ navigation }) => {
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
+  // const categories = [
+  //   { id: 1, emoji: '💰', name: '월급' },
+  //   { id: 2, emoji: '💸', name: '용돈' },
+  //   { id: 3, emoji: '📈', name: '투자' },
+  //   { id: 4, emoji: '📝', name: '기타' },
+  // ];
+
   const categories = [
-    { id: 1, emoji: '💰', name: '월급' },
-    { id: 2, emoji: '💸', name: '용돈' },
-    { id: 3, emoji: '📈', name: '투자' },
-    { id: 4, emoji: '📝', name: '기타' },
+    { id: 1, emoji: '💰', name: '월급', icon: require('../../assets/wage.png') },
+    { id: 2, emoji: '💸', name: '용돈', icon: require('../../assets/money.png') },
+    { id: 3, emoji: '📈', name: '투자', icon: require('../../assets/etc.png') },
+    { id: 4, emoji: '📝', name: '기타', icon: require('../../assets/etc.png') },
   ];
 
   const formatDate = (date) => {
@@ -33,6 +41,7 @@ const AddIncome = ({ navigation }) => {
         (cat) => cat.id === selectedCategory
       );
 
+     
       const newIncome = {
         id: Date.now(),
         amount: parseInt(amount),
@@ -42,8 +51,8 @@ const AddIncome = ({ navigation }) => {
           id: selectedCategoryInfo.id,
           emoji: selectedCategoryInfo.emoji,
           name: selectedCategoryInfo.name,
+          icon: selectedCategoryInfo.icon, // Add the icon here
         },
-        createdAt: new Date()
       };
 
       const existingData = await AsyncStorage.getItem('incomes');

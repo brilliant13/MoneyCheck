@@ -1,3 +1,4 @@
+// src/pages/Floating/ManualReceipt.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,7 +14,21 @@ const ManualReceipt = ({ navigation, route }) => {
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedMood, setSelectedMood] = useState(null);
 
+
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+
+  
   const moods = ['🤩', '😊', '😑', '🥲', '😭'];
+
+  const categories = [
+    { id: 1, emoji: '💰', name: '월급', icon: require('../../assets/wage.png') },
+    { id: 2, emoji: '💸', name: '용돈', icon: require('../../assets/money.png') },
+    { id: 3, emoji: '📈', name: '투자', icon: require('../../assets/etc.png') },
+    { id: 4, emoji: '📝', name: '기타', icon: require('../../assets/etc.png') },
+  ];
+
 
   const formatDate = (date) => {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
@@ -125,7 +140,44 @@ const ManualReceipt = ({ navigation, route }) => {
             </TouchableOpacity>
           ))}
         </View>
+
+
+      {/* 카테고리 선택 */}
+      <View style={styles.categorySection}>
+        <Text style={styles.label}>카테고리</Text>
+        <View style={styles.categoryContainer}>
+          {categories.map((category) => (
+            <TouchableOpacity
+              key={category.id}
+              style={[
+                styles.categoryItem,
+                selectedCategory === category.id && styles.selectedCategory,
+              ]}
+              onPress={() => setSelectedCategory(category.id)}
+            >
+              <Text style={styles.categoryEmoji}>{category.emoji}</Text>
+              <Text style={styles.categoryName}>{category.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
+
+
+
+
+
+
+      </View>
+
+
+
+
+
+
+
+
+
+
 
       {/* 저장 버튼 */}
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
