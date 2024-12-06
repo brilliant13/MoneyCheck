@@ -12,7 +12,6 @@ export default StyleSheet.create({
   cameraFrame: {
     height: 450 * scale,
     backgroundColor: '#D9D9D9',
-    marginTop: 50 * scale,
     overflow: 'hidden',
   },
   buttonContainer: {
@@ -20,7 +19,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20 * scale,
     position: 'absolute',
-    top: 450 * scale,
+    top: 400 * scale,
     width: '100%',
   },
   albumButton: {
@@ -62,13 +61,13 @@ export default StyleSheet.create({
     color: '#949494',
     fontSize: 14 * scale,
     fontFamily: 'Pretendard',
-    top: 550 * scale,
+    top: 480 * scale,
   },
   captureButtonContainer: {
     position: 'absolute',
     alignItems: 'center',
     width: '100%',
-    top: 600 * scale,
+    top: 530 * scale,
   },
   captureButton: {
     width: 120 * scale,
@@ -79,6 +78,62 @@ export default StyleSheet.create({
     borderColor: '#02D2C4',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  },
+  loadingBox: {
+    backgroundColor: 'white',
+    padding: 24 * scale,
+    borderRadius: 16,
+    alignItems: 'center',
+    width: '80%',
+    maxWidth: 300 * scale,
+  },
+  loadingText: {
+    marginTop: 16 * scale,
+    fontSize: 16 * scale,
+    fontWeight: '600',
+    color: '#222222',
+    fontFamily: 'Pretendard',
+  },
+  loadingSubText: {
+    marginTop: 8 * scale,
+    fontSize: 14 * scale,
+    color: '#666666',
+    fontFamily: 'Pretendard',
+  },
+  camera: {
+    flex: 1,
+    width: '100%',
+  },
+  selectedImage: {
+    flex: 1,
+    width: '100%',
+  },
+  cameraPlaceholder: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    color: '#666666',
+    fontSize: 14 * scale,
+    fontFamily: 'Pretendard',
+  },
+  captureButtonText: {
+    marginTop: 10 * scale,
+    fontSize: 14 * scale,
+    color: '#00AB96',
+    fontFamily: 'Pretendard',
   },
   // ... 나머지 스타일은 동일하게 scale 적용
 }); 
