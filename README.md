@@ -1,4 +1,4 @@
-# 📱 감정 기반 분석 가계부 (Emotion-based Expense Tracker)
+# 📱 MoneyCheck (감정 기반 소비 분석 가계부)
 
 > **크로스플랫폼 가계부 모바일 어플리케이션**  
 > React Native 기반으로 iOS와 Android에서 동작하며, 감정 기반 소비 분석 기능을 제공하는 스마트 가계부  
@@ -6,7 +6,7 @@
 ---
 
 ## 📖 프로젝트 개요
-- 프로젝트명: **Emotion-based Expense Tracker**  
+- 프로젝트명: **MoneyCheck**  
 - 개발환경: **React Native (Cross-platform)**  
 - 과목명: 고급 모바일프로그래밍 (A반)  
 - 팀명: 7팀  
