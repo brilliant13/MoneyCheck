@@ -49,7 +49,7 @@
 
 ## 🖼️ 시연 영상
 [![시연 영상](https://img.youtube.com/vi/KckPUBcJsH0/0.jpg)](https://youtu.be/KckPUBcJsH0)  
-👉 위 썸네일을 클릭하면 유튜브 시연 영상을 바로 보실 수 있어요!
+👉 클릭하면 시연 영상을 볼 수 있습니다.
 
 ---
 
